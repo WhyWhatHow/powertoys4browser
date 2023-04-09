@@ -10,7 +10,7 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_registerMenuCommand
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/twitter-thread-reader.js
-// @license MIT
+// @license      MIT
 // ==/UserScript==
 
 const curUrl = window.location.href;
