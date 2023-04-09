@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitter thread reader
-// @namespace    https://whywhathow.fun/
-// @version      0.6
+// @namespace    https://whywhathow.github.io/
+// @version      1.0
 // @description  when we read twitter thread, it's sucks. so I try to generate twitter thread reader in one single page, so i can easily read and share. Anyway, it's easy to read twitter's thread.
 // @author       whywhathow
 // @match        https://twitter.com/*/status/*
@@ -9,6 +9,8 @@
 // @grant        unsafeWindow
 // @grant        GM_xmlhttpRequest
 // @grant        GM_registerMenuCommand
+// @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/twitter-thread-reader.js
+// @license MIT
 // ==/UserScript==
 
 const curUrl = window.location.href;
