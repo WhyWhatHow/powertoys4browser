@@ -1,5 +1,3 @@
-<h4 align="right"><strong>English</strong> | <a href="https://github.com/whywhathow/powertoys4browser/blob/master/README_CN.md">简体中文</a></h4>
-
 <h4 align="right"><strong>English</strong> | <a href="README_CN.md">简体中文</a></h4>
 
 # PowerToys4Browser
