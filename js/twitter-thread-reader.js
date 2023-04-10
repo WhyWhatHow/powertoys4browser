@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitter thread reader
 // @namespace    https://whywhathow.github.io/
-// @version      1.1
+// @version      1.2
 // @description  when we read twitter thread, it's sucks. so I try to generate twitter thread reader in one single page, so i can easily read and share. Anyway, it's easy to read twitter's thread.
 // @author       whywhathow
 // @match        https://twitter.com/*/status/*
@@ -9,6 +9,7 @@
 // @grant        unsafeWindow
 // @grant        GM_xmlhttpRequest
 // @grant        GM_registerMenuCommand
+// @run-at       document-idle
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/twitter-thread-reader.js
 // @license      MIT
 // ==/UserScript==
@@ -36,15 +37,15 @@ function redirect(url) {
     console.log("准备跳转...");
     console.log(url);
     // 跳转到指定 URL
-    window.location.href=url;
-    // GM_openInTab(url);
+    // window.location.href=url;
+    GM_openInTab(url);
     
 }
 // actually doing something 
 function running() {
     // 1. get url and twitter's thread id.
 
-    var currentUrl = curUrl;
+    let currentUrl = curUrl;
     // if (currentUrl === null) {
     //     return;
     // }
