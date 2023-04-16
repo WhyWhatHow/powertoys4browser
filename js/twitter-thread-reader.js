@@ -1,6 +1,8 @@
 // ==UserScript==
 // @name         Twitter thread reader
 // @namespace    https://whywhathow.github.io/
+// @homepage     https://github.com/WhyWhatHow/powertoys4browser
+// @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
 // @version      1.4
 // @description  when we read twitter thread, it's sucks. so I try to generate twitter thread reader in one single page, so i can easily read and share. Anyway, it's easy to read twitter's thread.
 // @author       whywhathow
@@ -101,6 +103,7 @@ function isInTwitterInput() {
         else if (event.key === 'f' && !isInTwitterInput()) {
             // 执行您的脚本逻辑
             console.log('f------------------------------------f');
+            // alert("just wait")
             running()
         }
 
