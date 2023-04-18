@@ -29,7 +29,7 @@ Here are the available search commands:
 - `wa`: Search WolframAlpha
 - `r`: Search Reddit
 
-For example, to search for "cats" on Google, simply type `/ g cats` and hit enter. The userscript will take you to the Google search results page for "cats".
+For example, to search for "cats" on Google, simply type `g g cats` and hit enter. The userscript will take you to the Google search results page for "cats".
 
 ## Quick Search Userscript
 
