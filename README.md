@@ -11,9 +11,17 @@ To use PowerToys4Browser, you need to install a userscript manager like [Tamperm
 ## Scripts
 
 PowerToys4Browser includes the following userscripts:
+### Twitter Thread Reader:
+a userscript that allows users to read Twitter threads in one single page. For more information, please refer to [doc/twitter-thread-reader.md](doc/twitter-thread-reader.md).
 
-- Twitter Thread Reader: a userscript that allows users to read Twitter threads in one single page. For more information, please refer to [doc/twitter-thread-reader.md](doc/twitter-thread-reader.md).
+### Quick Search: 
+The Quick Search userscript allows you to search various websites quickly and easily by just typing a command followed by a search keyword. The supported websites include Google, Google Images, Google Scholar, DuckDuckGo, Twitter, GitHub, YouTube, Wikipedia, WolframAlpha, and Reddit.
 
+For example, to search for "cats" on Google, simply type g,then input `g cats`  and hit enter. The userscript will take you to the Google search results page for "cats".
+
+[More information](doc/quick-search.md)
+
+---
 We are continuously working on adding new userscripts to PowerToys4Browser.
 
 ## Contribution
