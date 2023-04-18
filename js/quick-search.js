@@ -5,6 +5,7 @@
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
 // @author       whywhathow
 // @version      1.8
+// @icon         https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/icons/quick-search.ico
 // @description  Quick search for Google,google image, google scholar, duckduckgo, twitter,  GitHub.... You don't need to enter the whole links, you just need to use `g keyword`  to google search, `yt keyword`to youtube.com search. and don't worry about like 'yt ' , you just will go to youtube.com. nothing will change. 
 // @match        *://*/*
 // @grant        GM_notification
