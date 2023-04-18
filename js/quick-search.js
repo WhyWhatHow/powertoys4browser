@@ -4,12 +4,12 @@
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
 // @author       whywhathow
-// @version      1.7
+// @version      1.8
 // @description  Quick search for Google,google image, google scholar, duckduckgo, twitter,  GitHub.... You don't need to enter the whole links, you just need to use `g keyword`  to google search, `yt keyword`to youtube.com search. and don't worry about like 'yt ' , you just will go to youtube.com. nothing will change. 
 // @match        *://*/*
 // @grant        GM_notification
 // @license      MIT
-
+// @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/quick-search.js
 
 // ==/UserScript==
 
@@ -225,3 +225,5 @@ function running() {
         }
     }, true);
 })();
+
+// hints : js 匿名hanshu 执行 是 (function(){})();(function(){}) 只是定义了一个匿名函数. fuck!

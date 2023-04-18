@@ -34,5 +34,5 @@ For example, to search for "cats" on Google, simply type `g g cats` and hit ente
 ## Quick Search Userscript
 
 Here's the code for the Quick Search userscript:
-
+[Quick-search](https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/quick-search.js)
 
