@@ -4,7 +4,7 @@
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
 // @author       whywhathow
-// @version      1.8
+// @version      1.9
 // @icon         https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/icons/quick-search.ico
 // @description  Quick search for Google,google image, google scholar, duckduckgo, twitter,  GitHub.... You don't need to enter the whole links, you just need to use `g keyword`  to google search, `yt keyword`to youtube.com search. and don't worry about like 'yt ' , you just will go to youtube.com. nothing will change. 
 // @match        *://*/*
@@ -14,52 +14,6 @@
 
 // ==/UserScript==
 
-/***
- * 消息通知
- */
-function showNotification(title, options) {
-    // 检查浏览器是否支持通知
-    if (!('Notification' in window)) {
-        console.log('浏览器不支持通知');
-        return;
-    }
-    // 检查通知权限
-    if (Notification.permission === 'granted') {
-        // 显示通知
-        const notification = new Notification(title, options);
-
-        // 点击通知时执行回调函数
-        if (options && options.onClick) {
-            notification.addEventListener('click', options.onClick);
-        }
-    } else if (Notification.permission !== 'denied') {
-        // 请求通知权限
-        Notification.requestPermission((permission) => {
-            if (permission === 'granted') {
-                // 显示通知
-                const notification = new Notification(title, options);
-
-                // 点击通知时执行回调函数
-                if (options && options.onClick) {
-                    notification.addEventListener('click', options.onClick);
-                }
-            }
-        });
-    }
-}
-
-/***
- * 光标判断 是否是在输入框 input ,textarea
- */
-function isInput() {
-    if (document.activeElement.tagName.toLowerCase() == "input" || document.activeElement.tagName.toLowerCase() == "textarea") {
-        return true;
-    } else if (document.activeElement.tagName.toLowerCase() == "div" && document.activeElement.contentEditable == "true") {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 const DEFAULT_SEARCH_ENGINE = "https://www.google.com/search?q=";
 const searchEngines = {};
@@ -154,6 +108,79 @@ function initSearchEngines() {
     }
 }
 
+/***
+ * 消息通知
+ */
+function showNotification(title, options) {
+    // 检查浏览器是否支持通知
+    if (!('Notification' in window)) {
+        console.log('浏览器不支持通知');
+        return;
+    }
+    // 检查通知权限
+    if (Notification.permission === 'granted') {
+        // 显示通知
+        const notification = new Notification(title, options);
+
+        // 点击通知时执行回调函数
+        if (options && options.onClick) {
+            notification.addEventListener('click', options.onClick);
+        }
+    } else if (Notification.permission !== 'denied') {
+        // 请求通知权限
+        Notification.requestPermission((permission) => {
+            if (permission === 'granted') {
+                // 显示通知
+                const notification = new Notification(title, options);
+
+                // 点击通知时执行回调函数
+                if (options && options.onClick) {
+                    notification.addEventListener('click', options.onClick);
+                }
+            }
+        });
+    }
+}
+
+/**
+ * 判断是否是readwise 的插件版本
+ * 是readwise 插件部分 返回true ,不是返回false
+ * @returns {boolean}
+ */
+function isReadwise() {
+    var tagName = document.activeElement.tagName;
+    if ("READWISE-TOOLTIP-CONTAINER" === tagName) {
+        console.log("-----------------------true---------------------")
+        return true;
+    }
+    return false;
+}
+
+/**
+ * 判断是否是 需要忽略的部分, 比如说 input textarea, 以及部分browser 插件 example: readwise
+ */
+function isIgnored() {
+    if (!isInput() && !isReadwise()) {
+        return true;
+    }
+    return false;
+}
+
+/***
+ * 光标判断 是否是在输入框 input ,textarea
+ */
+function isInput() {
+    var tagName = document.activeElement.tagName;
+    console.log(tagName + "---------------------+");
+    if (document.activeElement.tagName.toLowerCase() == "input" || document.activeElement.tagName.toLowerCase() == "textarea") {
+        return true;
+    } else if (document.activeElement.tagName.toLowerCase() == "div" && document.activeElement.contentEditable == "true") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 /**
  * 获取url的hostname, 即 homepage
  * @param {string} url
@@ -220,7 +247,10 @@ function running() {
         if (event.ctrlKey && event.key === 'g') {
             return;
         }
-        if (event.key === 'g' && !isInput()) {
+        if (event.altKey && event.shiftKey && event.key === 'g') {
+            return;
+        }
+        if (event.key === 'g' && isIgnored()) {
             initSearchEngines();
             running();
         }
