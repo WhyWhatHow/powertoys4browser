@@ -6,9 +6,10 @@
 // ==/UserScript==
 /**
  * 创建 消息通知组件:
+ * @param type :类型
  * @returns {HTMLDivElement}
  */
-function createMessageElement() {
+function createMessageElement(type) {
     const messageElement = document.createElement('div');
     messageElement.style.position = 'fixed';
     messageElement.style.top = '20px';
@@ -26,36 +27,52 @@ function createMessageElement() {
     // messageElement.style.opacity = '0';
     messageElement.style.transform = 'translate3d(0, -50%, 0)';
     messageElement.style.pointerEvents = 'none';
+    // 根据消息类型设置不同的 backgroudColor
+    switch (type) {
+        case 'success':
+            messageElement.style.backgroundColor = '#67C23A'; // 成功消息背景色
+            break;
+        case 'info':
+            messageElement.style.backgroundColor = '#909399'; // 信息消息背景色
+            break;
+        case 'error':
+            messageElement.style.backgroundColor = '#F56C6C'; // 错误消息背景色
+            break;
+        default:
+            break;
+    }
+    messageElement.style.color = '#fff';
+    messageElement.style.fontWeight = 'bold';
 
     return messageElement;
 }
 
-// const messageElement = createMessageElement();
-// document.body.appendChild(messageElement);
-function showMessage(type, message) {
-    const  container = createMessageElement();
-    container.style.backgroundColor = type === 'success' ? '#67C23A' : '#F56C6C';
-    container.style.color = '#fff';
-    container.style.fontWeight = 'bold';
-
-    const icon = document.createElement('i');
-    icon.style.marginRight = '5px';
-    icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
-
+/**
+ * 显示消息
+ * @param type
+ * @param message
+ * @param timeout
+ */
+function showMessage(type, message, timeout) {
+    const container = createMessageElement(type);
     const content = document.createElement('p');
     content.style.margin = '0';
     content.innerText = message;
-
-    container.appendChild(icon);
     container.appendChild(content);
 
     document.body.appendChild(container);
-
+    if (timeout === null) {
+        timeout = 1500;
+    }
     setTimeout(() => {
-        container.style.opacity ='0';
-        // container.remove();
-    }, 2000);
+        container.style.opacity = '0';
+        container.style.transform = 'translate3d(0, -50%, 0)';
+        container.style.pointerEvents = 'none';
+        container.remove();
+    }, timeout);
 }
 
-showMessage('success', '操作成功！');
+showMessage('success', '操作成功！', 2000);
 
+showMessage('info', '操作--info！', 2000);
+// showMessage('error', '操作failed！', 2000);
