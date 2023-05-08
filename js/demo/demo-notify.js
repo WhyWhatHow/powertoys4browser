@@ -53,7 +53,7 @@ function createMessageElement(type) {
  * @param message
  * @param timeout
  */
-function showMessage(type, message, timeout) {
+function showMessage(type, message, timeout=1000) {
     const container = createMessageElement(type);
     const content = document.createElement('p');
     content.style.margin = '0';
@@ -61,9 +61,6 @@ function showMessage(type, message, timeout) {
     container.appendChild(content);
 
     document.body.appendChild(container);
-    if (timeout === null) {
-        timeout = 1500;
-    }
     setTimeout(() => {
         container.style.opacity = '0';
         container.style.transform = 'translate3d(0, -50%, 0)';
