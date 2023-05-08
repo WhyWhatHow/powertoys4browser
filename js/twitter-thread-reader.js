@@ -141,7 +141,7 @@ function createMessageElement(type) {
  * @param message
  * @param timeout
  */
-function showMessage(type, message, timeout=1000) {
+function showMessage(type="success", message, timeout=1000) {
     const container = createMessageElement(type);
     const content = document.createElement('p');
     content.style.margin = '0';
