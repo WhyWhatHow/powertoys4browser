@@ -11,9 +11,15 @@ To use Twitter Thread Reader, you need to install a userscript manager like [Tam
 
 After installing the userscript, go to a Twitter post page and click the "read thread in another page" button in the menu. The userscript will send a GET request to https://twitter-thread.com/api/unroll-thread?id=<threadId> to get all the threads of the current post, and redirect the page to https://twitter-thread.com/t/<threadId> to display the threads in a new page.
 
+## Demo:
+
+![twitter-thread-reader-demo.gif](assets/twitter-thread-reader-demo.gif)
+
+
+
 ## How it works?
 
-Thanks for **twitter-thread.com**.
+Thanks for **twitter-thread.com**. I just use it api to create this script.
 
 ## Contribution
 

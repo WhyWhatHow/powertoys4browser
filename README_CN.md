@@ -12,9 +12,13 @@ PowerToys4Browser 是一个油猴脚本集合，为 Web 浏览器提供额外的
 
 PowerToys4Browser 包括以下用户脚本：
 
-### Twitter Thread Reader
+### Twitter Thread Reader:
 
 一个用户脚本，允许用户在单个页面中阅读 Twitter thread。有关更多信息，请参见 [doc/twitter-thread-reader.md](doc/twitter-thread-reader.md)。
+
+#### 示例:
+![twitter-thread-reader-demo.gif](assets/twitter-thread-reader-demo.gif)
+
 
 ### Quick Search:
 Quick Search userscript可以让你通过输入一个命令和搜索关键词来快速、轻松地搜索各种网站。支持的网站包括Google、Google Images、Google Scholar、DuckDuckGo、Twitter、GitHub、YouTube、Wikipedia、WolframAlpha和Reddit。
@@ -30,3 +34,6 @@ Quick Search userscript可以让你通过输入一个命令和搜索关键词来
 ## 许可证
 
 PowerToys4Browser 在 [MIT 许可证](https://github.com/whywhathow/powertoys4browser/blob/main/LICENSE)下发布。
+
+## 鸣谢:
+![jetBrains-teams](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png)
