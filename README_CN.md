@@ -16,11 +16,11 @@ PowerToys4Browser 包括以下用户脚本：
 
 一个用户脚本，允许用户在单个页面中阅读 Twitter thread。有关更多信息，请参见 [doc/twitter-thread-reader.md](doc/twitter-thread-reader.md)。
 
-#### 示例:
+#### 示例
 ![twitter-thread-reader-demo.gif](assets/twitter-thread-reader-demo.gif)
 
 
-### Quick Search:
+### Quick Search
 Quick Search userscript可以让你通过输入一个命令和搜索关键词来快速、轻松地搜索各种网站。支持的网站包括Google、Google Images、Google Scholar、DuckDuckGo、Twitter、GitHub、YouTube、Wikipedia、WolframAlpha和Reddit。
 [更多信息](doc/quick-search.md)
 例如，要在Google上搜索“猫”，只需输入命令“g”，然后输入“g cats”，然后按回车键。这个用户脚本会带你到Google搜索结果页面，搜索关键词是“cats”。
@@ -35,5 +35,5 @@ Quick Search userscript可以让你通过输入一个命令和搜索关键词来
 
 PowerToys4Browser 在 [MIT 许可证](https://github.com/whywhathow/powertoys4browser/blob/main/LICENSE)下发布。
 
-## 鸣谢:
-![jetBrains-teams](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png)
+## 鸣谢
+<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="jetBrains-teams" style="height:200px; position: left;" />
