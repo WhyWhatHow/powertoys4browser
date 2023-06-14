@@ -14,9 +14,7 @@ PowerToys4Browser includes the following userscripts:
 ### Twitter Thread Reader:
 A userscript that allows users to read Twitter threads in one single page. For more information, please refer to [doc/twitter-thread-reader.md](doc/twitter-thread-reader.md).
 #### Usage: 
-![twitter-thread-reader-demo.mp4](https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/assets/twitter-thread-reader-demo.mp4)
-
-- (https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/assets/twitter-thread-reader-demo.mp4)
+[![twitter-thread-reader-demo.mp4](https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/assets/twitter-thread-reader-demo.mp4)](https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/assets/twitter-thread-reader-demo.mp4)
 
 ### Quick Search: 
 The Quick Search userscript allows you to search various websites quickly and easily by just typing a command followed by a search keyword. The supported websites include Google, Google Images, Google Scholar, DuckDuckGo, Twitter, GitHub, YouTube, Wikipedia, WolframAlpha, and Reddit.
