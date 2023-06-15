@@ -1,7 +1,7 @@
 /***
  * todo
  *  -[x] 创建 div
- *  -[]  div 设置背景:font-awesomme  本质是 unicode, 直接css 实现自己需要的样式
+ *  -[x]  div 设置背景:font-awesomme  本质是 unicode, 直接css 实现自己需要的样式
  *  -[x] div hover 事件
  *  -[x] div 左击 事件
  *  -[] div 右击事件 ->触发配置中心,页面中心区域弹出配置页面, 可是使用进行自定义配置
@@ -17,6 +17,7 @@
 // ==/UserScript==
 
 /**
+ *
  * create Icon ,choose Emoji (easy to create, don't need to care the fucking unicode),not font-awesome(too heavy and not suitable for unicode )
  */
 function createIcon(elementType="span",fontSize="2em", fontWeight="900",code="&#129412;"){
