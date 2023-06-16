@@ -17,6 +17,7 @@ PowerToys4Browser includes the following userscripts:
 A userscript that allows users to read Twitter threads in one single page. For more information, please refer to [doc/twitter-thread-reader.md](doc/twitter-thread-reader.md).
 
 #### demo: 
+https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/assets/twitter-thread-reader-demo.mp4
 ![twitter-thread-reader-demo.gif](assets/twitter-thread-reader-demo.gif)
 
 ### Quick Search
