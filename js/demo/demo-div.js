@@ -20,15 +20,37 @@
  *
  * create Icon ,choose Emoji (easy to create, don't need to care the fucking unicode),not font-awesome(too heavy and not suitable for unicode )
  */
-function createIcon(elementType="span",fontSize="2em", fontWeight="900",code="&#129412;"){
+function createIcon(elementType = "span", fontSize = "2em", fontWeight = "900", code = "&#129412;") {
     var icon = document.createElement(elementType);
 // 设置样式
     icon.style.fontFamily = "Font Awesome 5 Free";
     icon.style.fontWeight = fontWeight;
     icon.style.fontSize = fontSize; // fa-3x
-    icon.innerHTML =code;
+    icon.innerHTML = code;
 
     return icon;
+}
+
+// Function to create a new div element
+function createNewDiv( position = "fixed", top="50%", right="50%",
+                      transform = "translate(50%,-50%)", width, height,
+                      backgroundColor = "#000000", color = "#FFFFFF",
+                      textAlign = "center",fontFamily = "Font Awesome",textContent ="hello world!") {
+
+    // Create the new div element
+    const newDiv = document.createElement('div');
+    newDiv.style.position = position;
+    newDiv.style.top = top;
+    newDiv.style.right = right;
+    newDiv.style.transform = transform;
+    newDiv.style.width = width;
+    newDiv.style.height = height;
+    newDiv.style.backgroundColor = backgroundColor;
+    newDiv.style.color =color;
+    newDiv.style.textAlign = textAlign;
+    newDiv.style.lineHeight = '100px';
+    newDiv.textContent = textContent;
+    return newDiv;
 }
 
 function createDivScript() {
@@ -43,16 +65,16 @@ function createDivScript() {
     initialDiv.style.height = '50px';
     initialDiv.style.backgroundColor = 'rgba(255, 68, 0, 0.5)';
     initialDiv.style.cursor = 'pointer';
-    initialDiv.addEventListener('mouseenter', function() {
+    initialDiv.addEventListener('mouseenter', function () {
         initialDiv.style.backgroundColor = 'rgba(255, 68, 0, 0.7)';
         initialDiv.title = 'Hello, World!';
     });
-    initialDiv.addEventListener('mouseleave', function() {
+    initialDiv.addEventListener('mouseleave', function () {
         initialDiv.style.backgroundColor = 'rgba(255, 68, 0, 0.5)';
         initialDiv.title = '';
     });
     initialDiv.addEventListener('click', createNewDiv);
-    initialDiv.addEventListener('contextmenu', function(event) {
+    initialDiv.addEventListener('contextmenu', function (event) {
         event.preventDefault();
         alert('You right-clicked the div!');
     });
@@ -60,26 +82,12 @@ function createDivScript() {
     initialDiv.appendChild(createIcon());
     // Add the div to the page
     document.body.appendChild(initialDiv);
+    var newDiv = createNewDiv("fixed","100px","50px"
+        );
 
-    // Function to create a new div element
-    function createNewDiv() {
-        // Create the new div element
-        const newDiv = document.createElement('div');
-        newDiv.style.position = 'fixed';
-        newDiv.style.top = '50%';
-        newDiv.style.right = '50%';
-        newDiv.style.transform = 'translate(50%, -50%)';
-        newDiv.style.width = '200px';
-        newDiv.style.height = '100px';
-        newDiv.style.backgroundColor = '#000000';
-        newDiv.style.color = '#FFFFFF';
-        newDiv.style.textAlign = 'center';
-        newDiv.style.lineHeight = '100px';
-        newDiv.textContent = 'Hello, World!';
+    document.body.appendChild(newDiv);
 
-        // Add the new div to the page
-        document.body.appendChild(newDiv);
-    }
+
 }
 
 // Call the function to create the div script
