@@ -3,7 +3,7 @@
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.5
+// @version      1.6
 // @description  when we read twitter thread, it's sucks. so I try to generate twitter thread reader in one single page, so i can easily read and share. Anyway, it's easy to read twitter's thread.
 // @author       whywhathow
 // @match        https://twitter.com/
@@ -74,7 +74,7 @@ function running() {
             console.log(response.responseText); // 打印响应内容
         },
         onerror: function (error) {
-            showMessage("error","Load page error, please try again!")
+            showMessage("error", "Load page error, please try again!")
             console.error(error);
         }
     });
@@ -92,6 +92,7 @@ function isInTwitterInput() {
         return false;
     }
 }
+
 /**
  * 创建 消息通知组件:
  * @param type :类型
@@ -141,7 +142,7 @@ function createMessageElement(type) {
  * @param message
  * @param timeout
  */
-function showMessage(type="success", message, timeout=1000) {
+function showMessage(type = "success", message, timeout = 1000) {
     const container = createMessageElement(type);
     const content = document.createElement('p');
     content.style.margin = '0';
@@ -157,11 +158,57 @@ function showMessage(type="success", message, timeout=1000) {
     }, timeout);
 }
 
+/**
+ * create Icon ,choose Emoji (easy to create, don't need to care the fucking unicode),not font-awesome(too heavy and not suitable for unicode )
+ */
+function createIcon(elementType = "span", fontSize = "1.5em", fontWeight = "900", code = "&#129412;") {
+    var icon = document.createElement(elementType);
+    icon.style.fontWeight = fontWeight;
+    icon.style.fontSize = fontSize; // fa-3x
+    icon.innerHTML = code;
+    return icon;
+}
 
+// icon left click
+/**
+ * click to call running method
+ */
+function createIconDiv() {
+    // Create the initial div element
+    const clickDiv = document.createElement('div');
+    clickDiv.style.position = 'fixed';
+    clickDiv.style.top = '30%';
+    clickDiv.style.right = '1%';
+    clickDiv.style.width = '30px';
+    clickDiv.style.height = '30px';
+    clickDiv.style.zIndex = "9999";
+    clickDiv.style.cursor = 'pointer';
+    //  add icon
+    clickDiv.appendChild(createIcon())
+    clickDiv.addEventListener('mouseenter', function () {
+        clickDiv.style.backgroundColor = 'rgba(255, 68, 0, 0.7)';
+        // clickDiv.title = 'Hello, World!';
+        // console.log("mouseenter--------------------");
+    });
+    clickDiv.addEventListener('mouseleave', function () {
+        clickDiv.style.backgroundColor = 'rgba(255, 68, 0, 0.5)';
+        // clickDiv.title = '';
+        // console.log("mouseleave ----------------------")
+    });
+    // left click
+    clickDiv.addEventListener('click', function () {
+        // console.log("-----------left click-----------------")
+        running();
+    });
 
+    document.body.appendChild(clickDiv);
+}
+
+// main 函数
 (function () {
     'use strict';
     GM_registerMenuCommand('read thread in another page', running, 'f');
+    createIconDiv();
     // 监听按键事件
     document.addEventListener('keydown', function (event) {
         if (event.ctrlKey && event.key === 'f') {
@@ -172,7 +219,7 @@ function showMessage(type="success", message, timeout=1000) {
             // 执行您的脚本逻辑
             console.log('f------------------------------------f');
             // alert("just wait")
-            showMessage("info","Loading Page...",1000)
+            showMessage("info", "Loading Page...", 1000)
             running()
         }
 
