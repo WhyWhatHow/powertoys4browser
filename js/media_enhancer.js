@@ -2,11 +2,12 @@
 // @name         Media Player Enhancer
 // @description  Enhances the HTML5 video player with keyboard shortcuts and other features, and provides feedback on key presses.
 // @match        *://*/*
+// @icon         https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/icons/media_enhancer.ico
 // @grant        none
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.0
+// @version      1.1
 // @author       whywhathow
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/media_enhancer.js
 // @license      MIT
