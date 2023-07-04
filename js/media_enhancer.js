@@ -4,10 +4,11 @@
 // @match        *://*/*
 // @icon         https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/icons/media_enhancer.ico
 // @grant        none
+// @run-at       window-load
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.1
+// @version      1.2
 // @author       whywhathow
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/media_enhancer.js
 // @license      MIT
@@ -25,6 +26,7 @@ function initReference() {
     reference.style.color = '#fff';
     reference.style.padding = '10px';
     reference.style.zIndex = '9999';
+    reference.style.display= 'none';
     reference.innerHTML = `
         <h3>Video Player Shortcuts</h3>
         <ul style="list-style-type: none; padding-left: 0;">
