@@ -26,6 +26,9 @@ Quick Search userscript可以让你通过输入一个命令和搜索关键词来
 例如，要在Google上搜索“猫”，只需输入命令“g”，然后输入“g cats”，然后按回车键。这个用户脚本会带你到Google搜索结果页面，搜索关键词是“cats”。
 我们正在不断努力添加新的用户脚本到 PowerToys4Browser。
 
+### Media Enhancer 
+- [x] Html5 video player support 
+- [ ] audio player support 
 
 ## 贡献
 
