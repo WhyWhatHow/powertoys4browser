@@ -27,6 +27,11 @@ For example, to search for "cats" on Google, simply type g,then input `g cats`  
 
 [More information](doc/quick-search.md)
 
+### Media Player Enhancer
+- [x] HTML5 video media player support:  
+   Enhance your Html5 video player with Shortcuts
+   ![](https://cdn.jsdelivr.net/gh/whywhathow/image-hosting@main/img/202307041712959.png)
+- [ ] audio media support
 ---
 We are continuously working on adding new userscripts to PowerToys4Browser.
 
