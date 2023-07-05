@@ -8,7 +8,7 @@
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.4
+// @version      1.5
 // @author       whywhathow
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/media_enhancer.js
 // @license      MIT
@@ -16,19 +16,25 @@
 // 快捷键消息提示框 元素ID.
 const MSG_BOX_ID = 'reference';
 
+const body_size = {
+    width: document.body.offsetWidth,
+    height: document.body.offsetHeight
+};
+var container_default_size;
+
 // 初始化快捷键信息提示框
 function initReference() {
     const reference = document.createElement('div');
     reference.id = MSG_BOX_ID;
     reference.style.top = '25%';
     reference.style.left = '15%';
-    reference.style.margin= '10px';
+    reference.style.margin = '10px';
     reference.style.transform = 'translate(-50%, -50%)';
     reference.style.background = 'rgba(33,33,33,.9)'
     reference.style.color = '#fff';
     reference.style.padding = '10px';
     reference.style.zIndex = '9999';
-    reference.style.position='fixed';
+    reference.style.position = 'fixed';
     reference.style.display = 'none';
     reference.innerHTML = `
         <h3>Video Player Shortcuts</h3>
@@ -73,23 +79,80 @@ function createVideoParentElement(videoElement, feedbackElement) {
     // if (videoElement.parentElement === document.body) {
     ///////
     videoContainer = document.createElement('div');
-    videoContainer.id='video-container';
+    videoContainer.id = 'video-container';
     // videoContainer 样式设置
     videoContainer.style.position = 'relative'; // 设置父节点 div 的定位方式
     videoContainer.style.width = videoElement.offsetWidth + 'px'; // 设置父节点 div 的宽度
     videoContainer.style.height = videoElement.offsetHeight + 'px'; // 设置父节点 div 的高度
-    videoElement.parentNode.insertBefore(videoContainer, videoElement); // 将父节点 div 插入到 video 的前面
-
-    // box-sizing: border-box;
-    // } else {
-    //     videoContainer = videoElement.parentElement;
-    // }
+    console.log(videoContainer)
+    if (videoElement.parentElement === document.body) {
+        document.body.appendChild(videoContainer);
+    } else {
+        // hint: 这个函数已经将videoContainer 加入到document 中, 不需要二次加入
+        videoElement.parentNode.insertBefore(videoContainer, videoElement); // 将父节点 div 插入到 video 的前面
+    }
     console.log(videoContainer)
     videoContainer.appendChild(videoElement);
     videoContainer.appendChild(feedbackElement); //
     videoContainer.appendChild(document.getElementById(MSG_BOX_ID)); // 添加 快捷键消息提示框.
-    document.body.appendChild(videoContainer);
+    console.log(videoElement.parentElement)
+
     return videoContainer;
+}
+
+function initVideoPlayerDefault() {
+// 获取HTML5视频播放器元素
+    var videoPlayer = document.querySelector('video');
+// 如果没有找到视频播放器则退出
+    if (!videoPlayer) return;
+
+    videoPlayer.setAttribute('controls', true);
+    videoPlayer.constrolsList = 'nofullscreen';
+    videoPlayer.style.cssText = 'width:100%;height:100%;display:inline-block';
+
+    return videoPlayer;
+
+
+}
+
+function initVideoPlayer() {
+// 获取HTML5视频播放器元素
+    var originalVideo = document.querySelector('video');
+// 如果没有找到视频播放器则退出
+    if (!originalVideo) return;
+
+    originalVideo.style.display = 'none';
+
+// 使用 新建一个同类元素进行处理, 是否可以处理黑屏问题.
+    var videoPlayer = originalVideo.cloneNode();
+
+// 设置视频播放器的属性
+    videoPlayer.setAttribute('controls', true);
+    videoPlayer.constrolsList = 'nofullscreen';
+    videoPlayer.style.cssText = 'width:100%;height:100%;display:inline-block';
+
+    document.body.appendChild(videoPlayer);
+    return videoPlayer;
+}
+
+//全屏观看
+function fullScreen(videoContainer, videoPlayer, showFeedback) {
+    container_default_size = {
+        width: videoContainer.style.width,
+        height: height = videoContainer.style.height
+    };
+    videoContainer.style.width = body_size.width + 'px';
+    videoContainer.style.height = body_size.height + 'px';
+    videoContainer.requestFullscreen();
+    videoPlayer.play();
+    showFeedback('Fullscreen');
+}
+
+// 退出全屏
+function exitFullScreen(videoContainer, videoPlayer) {
+    videoContainer.style.width = container_default_size.width;
+    videoContainer.style.height = container_default_size.height;
+    document.exitFullscreen();
 }
 
 (function () {
@@ -98,17 +161,10 @@ function createVideoParentElement(videoElement, feedbackElement) {
     initReference();
 
     console.log("-----------------video Enhancer---------")
-    // 获取HTML5视频播放器元素
-    var videoPlayer = document.querySelector('video');
 
-    // 如果没有找到视频播放器则退出
-    if (!videoPlayer) return;
-
-
-    // 设置视频播放器的属性
-    videoPlayer.setAttribute('controls', true);
-    videoPlayer.constrolsList ='nofullscreen';
-    videoPlayer.style.cssText = 'width:100%;height:100%;display:inline-block';
+    // 创建 video标签 deepCopy
+    // var videoPlayer = initVideoPlayer(); //copy
+    var videoPlayer = initVideoPlayerDefault(); //
 
     // 创建一个用于显示反馈提示的<div>元素
     var feedback = document.createElement('div');
@@ -124,7 +180,7 @@ function createVideoParentElement(videoElement, feedbackElement) {
     document.addEventListener('keydown', function (event) {
         // Add keyboard event listeners to the video element
         const key = event.key;
-        console.log("----------------key: "+key+"-----------------")
+        console.log("----------------key: " + key + "-----------------")
         switch (key) {
             case 'ArrowLeft':
                 videoPlayer.currentTime -= 5;
@@ -148,11 +204,9 @@ function createVideoParentElement(videoElement, feedbackElement) {
                 break;
             case 'f':
                 if (document.fullscreenElement === videoContainer) {
-                    document.exitFullscreen();
+                    exitFullScreen(videoContainer)
                 } else {
-                    videoContainer.requestFullscreen();
-                    videoPlayer.play();
-                    showFeedback('Fullscreen');
+                    fullScreen(videoContainer, videoPlayer, showFeedback);
                 }
                 break;
             case 'm':
