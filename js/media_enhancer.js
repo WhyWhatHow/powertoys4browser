@@ -26,8 +26,11 @@ var container_default_size;
 function initReference() {
     const reference = document.createElement('div');
     reference.id = MSG_BOX_ID;
-    reference.style.top = '25%';
+    reference.style.top = '35%';
     reference.style.left = '15%';
+    reference.style.width = 'auto';
+    reference.style.height ='350px';
+    reference.style.fontSize='large';
     reference.style.margin = '10px';
     reference.style.transform = 'translate(-50%, -50%)';
     reference.style.background = 'rgba(33,33,33,.9)'
@@ -240,6 +243,13 @@ function exitFullScreen(videoContainer, videoPlayer) {
                 break;
             case 'q': // 显示快捷键信息
                 showReference();
+                break;
+            case 'p':
+                if (videoPlayer.paused) { // 如果视频已经暂停，则播放视频
+                    videoPlayer.play();
+                } else { // 如果视频正在播放，则暂停视频
+                    videoPlayer.pause();
+                }
                 break;
             case 'Space':
                 if (videoPlayer.paused) { // 如果视频已经暂停，则播放视频
