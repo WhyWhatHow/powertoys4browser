@@ -8,7 +8,7 @@
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.6
+// @version      1.7
 // @author       whywhathow
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/media_enhancer.js
 // @license      MIT
@@ -105,20 +105,20 @@ function createVideoParentElement(videoElement, feedbackElement) {
         width: videoElement.offsetWidth,
         height: videoElement.offsetHeight
     };
-    console.log("----------------------container_default_size--------------------")
-    console.log(container_default_size)
-    console.log(videoContainer)
+    // console.log("----------------------container_default_size--------------------")
+    // console.log(container_default_size)
+    // console.log(videoContainer)
     if (videoElement.parentElement === document.body) {
         document.body.appendChild(videoContainer);
     } else {
         // hint: 这个函数已经将videoContainer 加入到document 中, 不需要二次加入
         videoElement.parentNode.insertBefore(videoContainer, videoElement); // 将父节点 div 插入到 video 的前面
     }
-    console.log(videoContainer)
+    // console.log(videoContainer)
     videoContainer.appendChild(videoElement);
     videoContainer.appendChild(feedbackElement); //
     videoContainer.appendChild(document.getElementById(MSG_BOX_ID)); // 添加 快捷键消息提示框.
-    console.log(videoElement.parentElement)
+    // console.log(videoElement.parentElement)
 
     return videoContainer;
 }
@@ -138,30 +138,10 @@ function initVideoPlayerDefault() {
 
 }
 
-function initVideoPlayer() {
-// 获取HTML5视频播放器元素
-    var originalVideo = document.querySelector('video');
-// 如果没有找到视频播放器则退出
-    if (!originalVideo) return;
-
-    originalVideo.style.display = 'none';
-
-// 使用 新建一个同类元素进行处理, 是否可以处理黑屏问题.
-    var videoPlayer = originalVideo.cloneNode();
-
-// 设置视频播放器的属性
-    videoPlayer.setAttribute('controls', true);
-    videoPlayer.constrolsList = 'nofullscreen';
-    videoPlayer.style.cssText = 'width:100%;height:100%;display:inline-block';
-
-    document.body.appendChild(videoPlayer);
-    return videoPlayer;
-}
-
 //全屏观看
 function enterFullScreen(videoContainer, videoPlayer, showFeedback) {
 
-    console.log(container_default_size)
+    // console.log(container_default_size)
     videoContainer.style.width = body_size.width + 'px';
     videoContainer.style.height = body_size.height + 'px';
     videoContainer.requestFullscreen();
@@ -172,12 +152,12 @@ function enterFullScreen(videoContainer, videoPlayer, showFeedback) {
 // 退出全屏
 function exitFullScreen(videoContainer, videoPlayer) {
     if (document.fullscreenElement === videoContainer) {
-        console.log("----------------exit-fullScreen----------------------")
-        console.log(container_default_size)
+        // console.log("----------------exit-fullScreen----------------------")
+        // console.log(container_default_size)
         videoContainer.style.width = container_default_size.width + 'px';
         videoContainer.style.height = container_default_size.height + 'px';
-        console.log(videoContainer)
-        console.log("-------------------------------")
+        // console.log(videoContainer)
+        // console.log("-------------------------------")
         document.exitFullscreen();
     }
 }
@@ -237,11 +217,10 @@ function toggleMute(videoPlayer, showFeedback) {
         document.addEventListener('keydown', function (event) {
             // Add keyboard event listeners to the video element
             const key = event.key;
-            console.log('key pressed: ' + event.key)
             console.log("----------------key: " + key + "-----------------")
             switch (key) {
                 case 'Space':
-                    console.log("----------------space---------------")
+                    // // console.log("----------------space---------------")
                     if (videoPlayer.paused) { // 如果视频已经暂停，则播放视频
                         videoPlayer.play();
                     } else { // 如果视频正在播放，则暂停视频
