@@ -16,11 +16,23 @@
 // 快捷键消息提示框 元素ID.
 const MSG_BOX_ID = 'reference';
 
-const body_size = {
-    width: document.body.offsetWidth,
-    height: document.body.offsetHeight
-};
-var container_default_size;
+// 避免 body.offsetHeight = 0 的情况.
+let body_size;
+
+// 初始化 body_size
+function initBodySize() {
+    window.addEventListener('load', function () {
+        body_size = {
+            width: document.body.offsetWidth,
+            height: document.body.offsetHeight
+
+        };
+        console.log("----------body_size----------")
+        console.log(body_size)
+    });
+}
+
+var container_default_size; // 即videoPlayer的 width, height
 
 
 // 初始化快捷键信息提示框
@@ -30,7 +42,7 @@ function initReference() {
     reference.style.top = '35%';
     reference.style.left = '15%';
     reference.style.width = 'auto';
-    reference.style.height = '350px';
+    reference.style.height = 'auto';
     reference.style.fontSize = 'large';
     reference.style.margin = '10px';
     reference.style.transform = 'translate(-50%, -50%)';
@@ -53,8 +65,7 @@ function initReference() {
             <li style="display: flex; align-items: center;"><code style="font-size: 1.2em; font-weight: bold;">]</code>&nbsp; &nbsp;&nbsp;<span style="color: #999; margin-left: 10px;">Speed up playback</span></li>
             <li style="display: flex; align-items: center;"><code style="font-size: 1.2em; font-weight: bold;">R</code>&nbsp; &nbsp;&nbsp;<span style="color: #999; margin-left: 10px;">Reset player settings</span></li>
             <li style="display: flex; align-items: center;"><code style="font-size: 1.2em; font-weight: bold;">Q</code>&nbsp; &nbsp;&nbsp;<span style="color: #999; margin-left: 10px;">Show shortcuts reference</span></li>
-            <li style="display: flex; align-items: center;"><code style="font-size: 1.2em; font-weight: bold;">P</code>&nbsp; &nbsp;&nbsp;<span style="color: #999; margin-left: 10px;">Play or Pause Video </span></li>
-            
+            <li style="display: flex; align-items: center;"><code style="font-size: 1.2em; font-weight: bold;">P</code>&nbsp;&nbsp;&nbsp;<span style="color: #999; margin-left: 10px;">Play or Pause Video </span></li>
             <li style="display: flex; align-items: center;"><code style="font-size: 1.2em; font-weight: bold;">Esc</code> <span style="color: #999; margin-left: 10px;">Exit fullscreen</span></li>
          
         </ul>
@@ -90,6 +101,12 @@ function createVideoParentElement(videoElement, feedbackElement) {
     videoContainer.style.position = 'relative'; // 设置父节点 div 的定位方式
     videoContainer.style.width = videoElement.offsetWidth + 'px'; // 设置父节点 div 的宽度
     videoContainer.style.height = videoElement.offsetHeight + 'px'; // 设置父节点 div 的高度
+    container_default_size = {
+        width: videoElement.offsetWidth,
+        height: videoElement.offsetHeight
+    };
+    console.log("----------------------container_default_size--------------------")
+    console.log(container_default_size)
     console.log(videoContainer)
     if (videoElement.parentElement === document.body) {
         document.body.appendChild(videoContainer);
@@ -105,7 +122,7 @@ function createVideoParentElement(videoElement, feedbackElement) {
 
     return videoContainer;
 }
-
+// 获取<video> 主元素
 function initVideoPlayerDefault() {
 // 获取HTML5视频播放器元素
     var videoPlayer = document.querySelector('video');
@@ -142,11 +159,9 @@ function initVideoPlayer() {
 }
 
 //全屏观看
-function fullScreen(videoContainer, videoPlayer, showFeedback) {
-    container_default_size = {
-        width: videoContainer.style.width,
-        height: videoContainer.style.height
-    };
+function enterFullScreen(videoContainer, videoPlayer, showFeedback) {
+
+    console.log(container_default_size)
     videoContainer.style.width = body_size.width + 'px';
     videoContainer.style.height = body_size.height + 'px';
     videoContainer.requestFullscreen();
@@ -157,115 +172,143 @@ function fullScreen(videoContainer, videoPlayer, showFeedback) {
 // 退出全屏
 function exitFullScreen(videoContainer, videoPlayer) {
     if (document.fullscreenElement === videoContainer) {
-        videoContainer.style.width = container_default_size.width;
-        videoContainer.style.height = container_default_size.height;
+        console.log("----------------exit-fullScreen----------------------")
+        console.log(container_default_size)
+        videoContainer.style.width = container_default_size.width + 'px';
+        videoContainer.style.height = container_default_size.height + 'px';
+        console.log(videoContainer)
+        console.log("-------------------------------")
         document.exitFullscreen();
     }
 }
 
+/**
+ * 静音切换
+ * @param videoPlayer
+ * @param showFeedback
+ */
+function toggleMute(videoPlayer, showFeedback) {
+    if (videoPlayer.muted) {
+        videoPlayer.muted = false;
+        showFeedback('Mute Off')
+    } else {
+        videoPlayer.muted = true;
+        showFeedback('Mute On')
+    }
+}
+/// main function////
 (function () {
     'use strict';
     // 初始化消息提示框
     initReference();
+    // 初始化 body_size
+    initBodySize();
 
     console.log("-----------------video Enhancer---------")
 
     // 创建 video标签 deepCopy
     // var videoPlayer = initVideoPlayer(); //copy
-    var videoPlayer = initVideoPlayerDefault(); //
+    let videoPlayer = initVideoPlayerDefault(); //
+
+    if (!videoPlayer) return;
 
     // 创建一个用于显示反馈提示的<div>元素
-    var feedback = document.createElement('div');
+    let feedback = document.createElement('div');
     feedback.style.cssText = 'position:fixed !important; z-index:2147483647 !important; isolation:isolate !important;top:10%;right:5%;transform:translate(-50%,-50%);background:#333;color:#fff;padding:10px;border-radius:5px;z-index:2147483647;font-size:16px;visibility:hidden;'
     // document.body.appendChild(feedback);
 
     // 判断video 是否有父节点
 
     // 为视频播放器创建父元素
-    var videoContainer = createVideoParentElement(videoPlayer, feedback);
-
-
-    // 设置视频播放器的快捷键
-    document.addEventListener('keydown', function (event) {
-        // Add keyboard event listeners to the video element
-        const key = event.key;
-        console.log("----------------key: " + key + "-----------------")
-        switch (key) {
-            case 'ArrowLeft':
-                videoPlayer.currentTime -= 5;
-                showFeedback('← 5s');
-                break;
-            case 'ArrowRight':
-                videoPlayer.currentTime += 5;
-                showFeedback('→ 5s');
-                break;
-            case 'ArrowUp':
-                if (videoPlayer.volume < 1) {
-                    videoPlayer.volume += 0.1;
-                    showFeedback('↑ Volume');
-                }
-                break;
-            case 'ArrowDown':
-                if (videoPlayer.volume > 0) {
-                    videoPlayer.volume -= 0.1;
-                    showFeedback('↓ Volume');
-                }
-                break;
-            case 'f':
-                if (document.fullscreenElement === videoContainer) {
-                    exitFullScreen(videoContainer)
-                } else {
-                    fullScreen(videoContainer, videoPlayer, showFeedback);
-                }
-                break;
-            case 'm':
-                if (videoPlayer.muted) {
-                    videoPlayer.muted = false;
-                    showFeedback('Mute Off')
-                } else {
-                    videoPlayer.muted = true;
-                    showFeedback('Mute On')
-                }
-                break;
-
-            case '[':
-                videoPlayer.playbackRate = Math.max(0.1, videoPlayer.playbackRate - 0.1);
-                showFeedback(`- ${videoPlayer.playbackRate.toFixed(1)}x`);
-                break;
-            case ']':
-                videoPlayer.playbackRate += 0.1;
-                showFeedback(`+ ${videoPlayer.playbackRate.toFixed(1)}x`);
-                break;
-            case 'r': // r 键，重置播放器设置
-                videoPlayer.volume = 1;
-                videoPlayer.playbackRate = 1;
-                exitFullScreen(videoContainer)
-                showFeedback('Reset');
-                break;
-            case 'Escape': //esc ,退出全屏
-                exitFullScreen(videoContainer, videoPlayer)
-                break;
-            case 'q': // 显示快捷键信息
-                showReference();
-                break;
-            case 'p':
-                if (videoPlayer.paused) { // 如果视频已经暂停，则播放视频
-                    videoPlayer.play();
-                } else { // 如果视频正在播放，则暂停视频
-                    videoPlayer.pause();
-                }
-                break;
-            case 'Space':
-                if (videoPlayer.paused) { // 如果视频已经暂停，则播放视频
-                    videoPlayer.play();
-                } else { // 如果视频正在播放，则暂停视频
-                    videoPlayer.pause();
-                }
-                break;
-            default:
-                break;
+    let videoContainer = createVideoParentElement(videoPlayer, feedback);
+    // 退出全屏 操作
+    document.addEventListener('fullscreenchange', function () {
+        if (!document.fullscreenElement) {
+            console.log("------------exit fullScreen --listener---------------")
+            videoContainer.style.width = container_default_size.width + 'px';
+            videoContainer.style.height = container_default_size.height + 'px';
         }
     });
+    handleShortCuts();
+
+    /////////////////////////////////// end //////////////////////////
+    function handleShortCuts() {
+        // 设置视频播放器的快捷键
+        document.addEventListener('keydown', function (event) {
+            // Add keyboard event listeners to the video element
+            const key = event.key;
+            console.log('key pressed: ' + event.key)
+            console.log("----------------key: " + key + "-----------------")
+            switch (key) {
+                case 'Space':
+                    console.log("----------------space---------------")
+                    if (videoPlayer.paused) { // 如果视频已经暂停，则播放视频
+                        videoPlayer.play();
+                    } else { // 如果视频正在播放，则暂停视频
+                        videoPlayer.pause();
+                    }
+                    break;
+                case 'ArrowLeft':
+                    videoPlayer.currentTime -= 5;
+                    showFeedback('← 5s');
+                    break;
+                case 'ArrowRight':
+                    videoPlayer.currentTime += 5;
+                    showFeedback('→ 5s');
+                    break;
+                case 'ArrowUp':
+                    if (videoPlayer.volume < 1) {
+                        videoPlayer.volume += 0.1;
+                        showFeedback('↑ Volume');
+                    }
+                    break;
+                case 'ArrowDown':
+                    if (videoPlayer.volume > 0) {
+                        videoPlayer.volume -= 0.1;
+                        showFeedback('↓ Volume');
+                    }
+                    break;
+                case 'f':
+                    if (document.fullscreenElement === videoContainer) {
+                        exitFullScreen(videoContainer)
+                    } else {
+                        enterFullScreen(videoContainer, videoPlayer, showFeedback);
+                    }
+                    break;
+                case 'm':
+                    toggleMute(videoPlayer, showFeedback);
+                    break;
+                case '[':
+                    videoPlayer.playbackRate = Math.max(0.1, videoPlayer.playbackRate - 0.1);
+                    showFeedback(`- ${videoPlayer.playbackRate.toFixed(1)}x`);
+                    break;
+                case ']':
+                    videoPlayer.playbackRate += 0.1;
+                    showFeedback(`+ ${videoPlayer.playbackRate.toFixed(1)}x`);
+                    break;
+                case 'r': // r 键，重置播放器设置
+                    videoPlayer.volume = 1;
+                    videoPlayer.playbackRate = 1;
+                    showFeedback('Reset');
+                    break;
+
+                case 'q': // 显示快捷键信息
+                    showReference();
+                    break;
+                case 'p':
+                    if (videoPlayer.paused) { // 如果视频已经暂停，则播放视频
+                        videoPlayer.play();
+                    } else { // 如果视频正在播放，则暂停视频
+                        videoPlayer.pause();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
+
+
 
 // 显示按键反馈
     function showFeedback(text) {
