@@ -30,7 +30,13 @@ For example, to search for "cats" on Google, simply type g,then input `g cats`  
 ### Media Player Enhancer
 
 #### demo:
+
+
+https://github.com/WhyWhatHow/powertoys4browser/assets/33270266/fe143610-ca83-463f-848d-f240e1debd04
+
+
 ![media_enhancer.gif](assets/media_enhancer.gif)
+
 
 #### Features: 
 
