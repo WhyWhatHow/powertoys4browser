@@ -13,7 +13,7 @@ After installing the userscript, go to a Twitter post page and click the "read t
 
 ## Demo:
 
-![twitter-thread-reader-demo.gif](assets/twitter-thread-reader-demo.gif)
+![twitter-thread-reader-demo.gif](../assets/twitter-thread-reader-demo.gif)
 
 
 
