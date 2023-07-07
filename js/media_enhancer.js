@@ -8,7 +8,7 @@
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.5
+// @version      1.6
 // @author       whywhathow
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/media_enhancer.js
 // @license      MIT
@@ -22,6 +22,7 @@ const body_size = {
 };
 var container_default_size;
 
+
 // 初始化快捷键信息提示框
 function initReference() {
     const reference = document.createElement('div');
@@ -29,8 +30,8 @@ function initReference() {
     reference.style.top = '35%';
     reference.style.left = '15%';
     reference.style.width = 'auto';
-    reference.style.height ='350px';
-    reference.style.fontSize='large';
+    reference.style.height = '350px';
+    reference.style.fontSize = 'large';
     reference.style.margin = '10px';
     reference.style.transform = 'translate(-50%, -50%)';
     reference.style.background = 'rgba(33,33,33,.9)'
@@ -52,6 +53,8 @@ function initReference() {
             <li style="display: flex; align-items: center;"><code style="font-size: 1.2em; font-weight: bold;">]</code>&nbsp; &nbsp;&nbsp;<span style="color: #999; margin-left: 10px;">Speed up playback</span></li>
             <li style="display: flex; align-items: center;"><code style="font-size: 1.2em; font-weight: bold;">R</code>&nbsp; &nbsp;&nbsp;<span style="color: #999; margin-left: 10px;">Reset player settings</span></li>
             <li style="display: flex; align-items: center;"><code style="font-size: 1.2em; font-weight: bold;">Q</code>&nbsp; &nbsp;&nbsp;<span style="color: #999; margin-left: 10px;">Show shortcuts reference</span></li>
+            <li style="display: flex; align-items: center;"><code style="font-size: 1.2em; font-weight: bold;">P</code>&nbsp; &nbsp;&nbsp;<span style="color: #999; margin-left: 10px;">Play or Pause Video </span></li>
+            
             <li style="display: flex; align-items: center;"><code style="font-size: 1.2em; font-weight: bold;">Esc</code> <span style="color: #999; margin-left: 10px;">Exit fullscreen</span></li>
          
         </ul>
@@ -142,7 +145,7 @@ function initVideoPlayer() {
 function fullScreen(videoContainer, videoPlayer, showFeedback) {
     container_default_size = {
         width: videoContainer.style.width,
-        height: height = videoContainer.style.height
+        height: videoContainer.style.height
     };
     videoContainer.style.width = body_size.width + 'px';
     videoContainer.style.height = body_size.height + 'px';
@@ -153,9 +156,11 @@ function fullScreen(videoContainer, videoPlayer, showFeedback) {
 
 // 退出全屏
 function exitFullScreen(videoContainer, videoPlayer) {
-    videoContainer.style.width = container_default_size.width;
-    videoContainer.style.height = container_default_size.height;
-    document.exitFullscreen();
+    if (document.fullscreenElement === videoContainer) {
+        videoContainer.style.width = container_default_size.width;
+        videoContainer.style.height = container_default_size.height;
+        document.exitFullscreen();
+    }
 }
 
 (function () {
@@ -178,6 +183,7 @@ function exitFullScreen(videoContainer, videoPlayer) {
 
     // 为视频播放器创建父元素
     var videoContainer = createVideoParentElement(videoPlayer, feedback);
+
 
     // 设置视频播放器的快捷键
     document.addEventListener('keydown', function (event) {
@@ -233,13 +239,11 @@ function exitFullScreen(videoContainer, videoPlayer) {
             case 'r': // r 键，重置播放器设置
                 videoPlayer.volume = 1;
                 videoPlayer.playbackRate = 1;
-                document.exitFullscreen();
+                exitFullScreen(videoContainer)
                 showFeedback('Reset');
                 break;
             case 'Escape': //esc ,退出全屏
-                if (document.fullscreenElement) {
-                    document.exitFullscreen();
-                }
+                exitFullScreen(videoContainer, videoPlayer)
                 break;
             case 'q': // 显示快捷键信息
                 showReference();
