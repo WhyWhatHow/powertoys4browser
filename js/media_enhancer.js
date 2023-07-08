@@ -103,8 +103,8 @@ function createVideoParentElement(videoElement, feedbackElement) {
     videoContainer = document.createElement('div');
     videoContainer.id = 'fun-video-container';
     // videoContainer 样式设置
-    // videoContainer.style.position = 'relative'; // 设置父节点 div 的定位方式
-    videoContainer.style.position ='inherit';
+    videoContainer.style.position = 'relative'; // 设置父节点 div 的定位方式
+    // videoContainer.style.position ='inherit';
     videoContainer.style.width = videoElement.offsetWidth + 'px'; // 设置父节点 div 的宽度
     videoContainer.style.height = videoElement.offsetHeight + 'px'; // 设置父节点 div 的高度
     container_default_size = {
@@ -151,6 +151,7 @@ function enterFullScreen(videoContainer, videoPlayer, showFeedback) {
     console.log(container_default_size)
     videoContainer.style.width = body_size.width + 'px';
     videoContainer.style.height = body_size.height + 'px';
+    addVideo(videoContainer,videoPlayer);
     videoContainer.requestFullscreen();
     console.log(videoContainer)
     console.log("====================================================")
@@ -172,6 +173,30 @@ function exitFullScreen(videoContainer) {
 }
 
 /**
+ * 将 video player 作为 videoContainer 的第一个子元素存在
+ * @param videoContainer
+ * @param videoPlayer
+ */
+function addVideo(videoContainer, videoPlayer) {
+    if (videoContainer && videoPlayer) {
+        videoContainer.insertBefore(videoPlayer, videoContainer.firstChild);
+    } else {
+        console.log(" video-container | video don't exist ")
+    }
+}
+
+/**
+ * 判断 videoPlayer.display === none , 如果是, 设置为inline-block
+ * @param videoPlayer
+ */
+function checkVideoPlayerDisplay(videoPlayer) {
+    if (videoPlayer.style.display === 'none') {
+        videoPlayer.style.display = 'inline-block';
+    }
+    return videoPlayer;
+}
+
+/**
  * 静音切换
  * @param videoPlayer
  * @param showFeedback
@@ -183,6 +208,28 @@ function toggleMute(videoPlayer, showFeedback) {
     } else {
         videoPlayer.muted = true;
         showFeedback('Mute On')
+    }
+}
+
+/**
+ *  视频全屏, 不是 videoContainer 下的全屏 切换到 videoContainer,
+ * @param videoContainer
+ * @param videoPlayer
+ * @param showFeedback
+ */
+function toggleFullScreen(videoContainer, videoPlayer, showFeedback) {
+
+    addVideo(videoContainer, videoPlayer);
+    videoPlayer = checkVideoPlayerDisplay(videoPlayer);
+    if (document.fullscreenElement === videoContainer) {
+        console.log("*********************----------------------exit------------------------")
+        exitFullScreen(videoContainer)
+    } else {
+        console.log('--*************---------------F----not full screen --------------------')
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+        enterFullScreen(videoContainer, videoPlayer, showFeedback);
     }
 }
 
@@ -205,21 +252,28 @@ function main() {
     feedback.style.cssText = 'position:fixed !important; z-index:2147483647 !important; isolation:isolate !important;top:10%;right:5%;transform:translate(-50%,-50%);background:#333;color:#fff;padding:10px;border-radius:5px;z-index:2147483647;font-size:16px;visibility:hidden;'
     // document.body.appendChild(feedback);
 
-    // 判断video 是否有父节点
-
     // 为视频播放器创建父元素
     let videoContainer = createVideoParentElement(videoPlayer, feedback);
     // 全屏 变化 操作
     document.addEventListener('fullscreenchange', function () {
-        if (!document.fullscreenElement) { // 退出全屏
-            console.log("------------exit fullScreen --listener---------------")
+
+        // toggleFullScreen(videoContainer, videoPlayer, feedback)
+        addVideo(videoContainer, videoPlayer)
+        var fullscreenElement = document.fullscreenElement;
+        if (!fullscreenElement) { // 退出全屏
             videoContainer.style.width = container_default_size.width + 'px';
             videoContainer.style.height = container_default_size.height + 'px';
-        }
-        else{ // 进入全屏
+        } else if (videoContainer === fullscreenElement) {
+
             videoContainer.style.width = body_size.width + 'px';
-            videoContainer.style.height = body_size.height+'px';
+            videoContainer.style.height = body_size.height + 'px';
+            console.log("------------video-container  fullscreen ----------------")
+        } else { // 进入全屏
+            console.log("-------------other div-------------------------------------")
+            videoContainer.style.position = 'static';
+            // enterFullScreen(videoContainer,videoPlayer,feedback)
         }
+
     });
     handleShortCuts();
 
@@ -260,13 +314,7 @@ function main() {
                     }
                     break;
                 case 'f':
-                    if (document.fullscreenElement !== videoContainer) {
-                        console.log('--*************---------------F----not full screen --------------------')
-                        enterFullScreen(videoContainer, videoPlayer, showFeedback);
-                    } else {
-                        console.log("FFFFFFFFFFFFFFFFFFFFF----------------------exit--------------------------------------------------------")
-                        exitFullScreen(videoContainer)
-                    }
+                    toggleFullScreen(videoContainer, videoPlayer, showFeedback);
                     break;
                 case 'm':
                     toggleMute(videoPlayer, showFeedback);
