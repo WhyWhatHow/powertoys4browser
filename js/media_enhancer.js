@@ -19,17 +19,24 @@ const MSG_BOX_ID = 'reference';
 // 避免 body.offsetHeight = 0 的情况.
 let body_size;
 
+//  初始化
+function init() {
+    // 初始化消息提示框
+    initReference();
+    // 初始化 body_size
+    initBodySize();
+}
+
 // 初始化 body_size
 function initBodySize() {
-    window.addEventListener('load', function () {
-        body_size = {
-            width: document.body.offsetWidth,
-            height: document.body.offsetHeight
+    body_size = {
+        width: document.body.offsetWidth,
+        height: document.body.offsetHeight
 
-        };
-        console.log("----------body_size----------")
-        console.log(body_size)
-    });
+    };
+    console.log("----------body_size----------")
+    console.log(body_size)
+
 }
 
 var container_default_size; // 即videoPlayer的 width, height
@@ -92,11 +99,9 @@ function showReference() {
  */
 function createVideoParentElement(videoElement, feedbackElement) {
     var videoContainer;
-    //  判断父节点是否是body标签 ,是body节点重新生成div作为父节点
-    // if (videoElement.parentElement === document.body) {
     ///////
     videoContainer = document.createElement('div');
-    videoContainer.id = 'video-container';
+    videoContainer.id = 'fun-video-container';
     // videoContainer 样式设置
     videoContainer.style.position = 'relative'; // 设置父节点 div 的定位方式
     videoContainer.style.width = videoElement.offsetWidth + 'px'; // 设置父节点 div 的宽度
@@ -122,17 +127,18 @@ function createVideoParentElement(videoElement, feedbackElement) {
 
     return videoContainer;
 }
+
 // 获取<video> 主元素
 function initVideoPlayerDefault() {
-// 获取HTML5视频播放器元素
-    var videoPlayer = document.querySelector('video');
-// 如果没有找到视频播放器则退出
+    // 获取HTML5视频播放器元素
+    let videoPlayer = document.querySelector('video');
+    // 如果没有找到视频播放器则退出
     if (!videoPlayer) return;
-
+    console.log('----------------videoPlayer--------------')
+    console.log(videoPlayer)
     videoPlayer.setAttribute('controls', true);
     videoPlayer.constrolsList = 'nofullscreen';
     videoPlayer.style.cssText = 'width:100%;height:100%;display:inline-block';
-
     return videoPlayer;
 
 
@@ -176,19 +182,18 @@ function toggleMute(videoPlayer, showFeedback) {
         showFeedback('Mute On')
     }
 }
-/// main function////
-(function () {
-    'use strict';
-    // 初始化消息提示框
-    initReference();
-    // 初始化 body_size
-    initBodySize();
 
+/// main function////
+function main() {
+    'use strict';
+    // 初始化, 创建shortcutsBox & initBodySize
     console.log("-----------------video Enhancer---------")
+    init()
 
     // 创建 video标签 deepCopy
     // var videoPlayer = initVideoPlayer(); //copy
-    let videoPlayer = initVideoPlayerDefault(); //
+    let videoPlayer = initVideoPlayerDefault();
+
 
     if (!videoPlayer) return;
 
@@ -288,7 +293,6 @@ function toggleMute(videoPlayer, showFeedback) {
     }
 
 
-
 // 显示按键反馈
     function showFeedback(text) {
         feedback.textContent = text;
@@ -298,5 +302,6 @@ function toggleMute(videoPlayer, showFeedback) {
             feedback.style.visibility = 'hidden';
         }, 1000);
     }
-})
-();
+}
+
+window.addEventListener('load', main);
