@@ -8,7 +8,7 @@
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.7
+// @version      1.8
 // @author       whywhathow
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/media_enhancer.js
 // @license      MIT
@@ -103,7 +103,8 @@ function createVideoParentElement(videoElement, feedbackElement) {
     videoContainer = document.createElement('div');
     videoContainer.id = 'fun-video-container';
     // videoContainer 样式设置
-    videoContainer.style.position = 'relative'; // 设置父节点 div 的定位方式
+    // videoContainer.style.position = 'relative'; // 设置父节点 div 的定位方式
+    videoContainer.style.position ='inherit';
     videoContainer.style.width = videoElement.offsetWidth + 'px'; // 设置父节点 div 的宽度
     videoContainer.style.height = videoElement.offsetHeight + 'px'; // 设置父节点 div 的高度
     container_default_size = {
@@ -146,24 +147,26 @@ function initVideoPlayerDefault() {
 
 //全屏观看
 function enterFullScreen(videoContainer, videoPlayer, showFeedback) {
-
-    // console.log(container_default_size)
+    console.log("---------------enterFullScreen----------------------")
+    console.log(container_default_size)
     videoContainer.style.width = body_size.width + 'px';
     videoContainer.style.height = body_size.height + 'px';
     videoContainer.requestFullscreen();
+    console.log(videoContainer)
+    console.log("====================================================")
     videoPlayer.play();
     showFeedback('Fullscreen');
 }
 
 // 退出全屏
-function exitFullScreen(videoContainer, videoPlayer) {
+function exitFullScreen(videoContainer) {
     if (document.fullscreenElement === videoContainer) {
-        // console.log("----------------exit-fullScreen----------------------")
-        // console.log(container_default_size)
+        console.log("----------------exit-fullScreen----------------------")
+        console.log(container_default_size)
         videoContainer.style.width = container_default_size.width + 'px';
         videoContainer.style.height = container_default_size.height + 'px';
-        // console.log(videoContainer)
-        // console.log("-------------------------------")
+        console.log(videoContainer)
+        console.log("------------------------------------------------------")
         document.exitFullscreen();
     }
 }
@@ -206,12 +209,16 @@ function main() {
 
     // 为视频播放器创建父元素
     let videoContainer = createVideoParentElement(videoPlayer, feedback);
-    // 退出全屏 操作
+    // 全屏 变化 操作
     document.addEventListener('fullscreenchange', function () {
-        if (!document.fullscreenElement) {
+        if (!document.fullscreenElement) { // 退出全屏
             console.log("------------exit fullScreen --listener---------------")
             videoContainer.style.width = container_default_size.width + 'px';
             videoContainer.style.height = container_default_size.height + 'px';
+        }
+        else{ // 进入全屏
+            videoContainer.style.width = body_size.width + 'px';
+            videoContainer.style.height = body_size.height+'px';
         }
     });
     handleShortCuts();
@@ -253,10 +260,12 @@ function main() {
                     }
                     break;
                 case 'f':
-                    if (document.fullscreenElement === videoContainer) {
-                        exitFullScreen(videoContainer)
-                    } else {
+                    if (document.fullscreenElement !== videoContainer) {
+                        console.log('--*************---------------F----not full screen --------------------')
                         enterFullScreen(videoContainer, videoPlayer, showFeedback);
+                    } else {
+                        console.log("FFFFFFFFFFFFFFFFFFFFF----------------------exit--------------------------------------------------------")
+                        exitFullScreen(videoContainer)
                     }
                     break;
                 case 'm':
