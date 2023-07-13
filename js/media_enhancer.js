@@ -8,7 +8,7 @@
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.8
+// @version      1.9
 // @author       whywhathow
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/media_enhancer.js
 // @license      MIT
@@ -22,7 +22,7 @@ let body_size;
 //  初始化
 function init() {
     // 初始化消息提示框
-    initReference();
+    initShortCutsBox();
     // 初始化 body_size
     initBodySize();
 }
@@ -43,7 +43,7 @@ var container_default_size; // 即videoPlayer的 width, height
 
 
 // 初始化快捷键信息提示框
-function initReference() {
+function initShortCutsBox() {
     const reference = document.createElement('div');
     reference.id = MSG_BOX_ID;
     reference.style.top = '35%';
