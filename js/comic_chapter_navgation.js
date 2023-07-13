@@ -8,7 +8,7 @@
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.0
+// @version      1.1
 
 // @author       whywhathow
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/comic_chapter_navgation.js
@@ -46,7 +46,7 @@ function createMessageElement(type) {
             messageElement.style.backgroundColor = '#67C23A'; // 成功消息背景色
             break;
         case 'info':
-            messageElement.style.backgroundColor = '#909399'; // 信息消息背景色
+            messageElement.style.backgroundColor = '#2094ff'; // 信息消息背景色
             break;
         case 'error':
             messageElement.style.backgroundColor = '#F56C6C'; // 错误消息背景色
@@ -68,7 +68,7 @@ function createMessageElement(type) {
  */
 function showMessage(type = "success", message, timeout = 1000) {
     console.log('-----------------show message -----------------')
-    var container ;
+    var container;
     if (!(container = document.getElementById('fun_message_box'))) {
         container = createMessageElement(type);
     }
@@ -82,7 +82,8 @@ function showMessage(type = "success", message, timeout = 1000) {
         container.style.opacity = '0';
         container.style.transform = 'translate3d(0, -50%, 0)';
         container.style.pointerEvents = 'none';
-        container.remove();
+        container.style.display ='none';
+        // container.remove();
     }, timeout);
 }
 
@@ -114,7 +115,7 @@ function showMessage(type = "success", message, timeout = 1000) {
             console.log("-------------p------------------------")
             if (prevLink) {
                 console.log(prevLink)
-                showMessage(" prev --- page ---- ")
+                showMessage("info", " prev --- page ---- ", 1000)
                 window.location.href = prevLink.href;
             }
         } else if (event.key === 'n' || event.key === 'ArrowRight') { // right arrow key
@@ -123,8 +124,8 @@ function showMessage(type = "success", message, timeout = 1000) {
             console.log("----------------n-----------------------")
             if (nextLink) {
                 console.log(nextLink)
-                showMessage("next---- page ------")
-                // window.location.href = nextLink.href;
+                showMessage("info", "next---- page ------", 1000)
+                window.location.href = nextLink.href;
 
             }
         }

@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Auto link to latest chapter
+// @name         Comic: Auto link to latest chapter
 // @description  auto link to the latest chapter
 // @match        *://*/book/*
 // @grant        none
