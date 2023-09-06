@@ -8,7 +8,7 @@
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.0
+// @version      1.1
 
 // @author       whywhathow
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/comic_last_link.js

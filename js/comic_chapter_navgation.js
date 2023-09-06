@@ -1,16 +1,17 @@
 // ==UserScript==
 // @name         Comic Chapter Navigation Hotkeys
-// @version      1.0
 // @description  Use arrow keys to navigate between chapters on a web page
 // @match        *://*/chapter/*
+// @match        http*://*/*/*
 // @grant        none
 // @icon         https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/icons/comic_icon.ico
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.1
+// @version      1.2
 
 // @author       whywhathow
+
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/comic_chapter_navgation.js
 // @license      MIT
 
@@ -82,36 +83,51 @@ function showMessage(type = "success", message, timeout = 1000) {
         container.style.opacity = '0';
         container.style.transform = 'translate3d(0, -50%, 0)';
         container.style.pointerEvents = 'none';
-        container.style.display ='none';
+        container.style.display = 'none';
         // container.remove();
     }, timeout);
 }
 
+function getPrevAndNextLinks(links, prevLink, nextLink) {
+    for (var i = 0; i < links.length; i++) {
+        var linkText = links[i].textContent.trim();
+        if (linkText === '上一章' || linkText === '上一页') {
+            prevLink = links[i];
+        } else if (linkText === '下一章' || linkText === '下一页') {
+            nextLink = links[i];
+        }
+    }
+    return {prevLink, nextLink};
+}
+
+
+function getLinks() {
+
+    var links = document.querySelectorAll('.fanye a');
+    if (links.length === 0) { // different webstite
+        links = document.getElementsByClassName('post-page-numbers');
+    }
+    return links;
+
+}
 
 (function () {
     'use strict';
     console.log(" chapter ---- navgation -----------")
 
-    function getLinks() {
-        var links = document.querySelectorAll('.fanye a');
-        var prevLink = null;
-        var nextLink = null;
-        for (var i = 0; i < links.length; i++) {
-            var linkText = links[i].textContent.trim();
-            if (linkText === '上一章') {
-                prevLink = links[i];
-            } else if (linkText === '下一章') {
-                nextLink = links[i];
-            }
-        }
-        return {prev: prevLink, next: nextLink};
+    var links = getLinks();
+    if (links.length === 0) {
+        return ;
     }
 
-    var links = getLinks();
+    var prevLink = null;
+    var nextLink = null;
+    const __ret = getPrevAndNextLinks(links, prevLink, nextLink);
+    prevLink = __ret.prevLink;
+    nextLink = __ret.nextLink;
 
     document.addEventListener('keydown', function (event) {
         if (event.key === 'p' || event.key === 'ArrowLeft') { // left arrow key
-            var prevLink = links.prev;
             console.log("-------------p------------------------")
             if (prevLink) {
                 console.log(prevLink)
@@ -120,7 +136,6 @@ function showMessage(type = "success", message, timeout = 1000) {
             }
         } else if (event.key === 'n' || event.key === 'ArrowRight') { // right arrow key
 
-            var nextLink = links.next;
             console.log("----------------n-----------------------")
             if (nextLink) {
                 console.log(nextLink)
