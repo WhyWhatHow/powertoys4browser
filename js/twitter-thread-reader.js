@@ -3,7 +3,7 @@
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.6
+// @version      1.7
 // @description  when we read twitter thread, it's sucks. so I try to generate twitter thread reader in one single page, so i can easily read and share. Anyway, it's easy to read twitter's thread.
 // @author       whywhathow
 // @match        https://twitter.com/
