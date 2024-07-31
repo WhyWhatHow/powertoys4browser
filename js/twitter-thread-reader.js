@@ -1,13 +1,13 @@
 // ==UserScript==
-// @name         Twitter thread reader
-// @namespace    https://whywhathow.github.io/
+// @name         Twitter Thread Reader
+// @namespace    https://github.com/WhyWhatHow/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.7
-// @description  when we read twitter thread, it's sucks. so I try to generate twitter thread reader in one single page, so i can easily read and share. Anyway, it's easy to read twitter's thread.
+// @version      1.8
+// @description  when we read Twitter|X thread, it's sucks. so I try to generate twitter thread reader in one single page, so i can easily read and share. Anyway, it's easy to read twitter's thread.
 // @author       whywhathow
-// @match        https://twitter.com/
-// @match        https://twitter.com/*/status/*
+// @match        https://x.com/
+// @match        https://x.com/*/status/*
 // @icon         https://abs.twimg.com/favicons/twitter.2.ico
 // @run-at       document-start
 // @grant        unsafeWindow
@@ -23,7 +23,7 @@
  * @returns {boolean}
  */
 function checkURL(str) {
-    const twitter = "https://twitter.com/home";
+    const twitter = "https://x.com/home";
     return twitter === str ? false : true;
 }
 
@@ -34,12 +34,9 @@ function getThreadID(url) {
     return threadId;
 }
 
-// 定义跳转函数
 function redirect(url) {
-    // 执行一些操作
     console.log("准备跳转...");
     console.log(url);
-    // 跳转到指定 URL
     // window.location.href=url;
     GM_openInTab(url);
 
@@ -55,23 +52,23 @@ function running() {
         // not thread page, don't anything.
         return;
     }
-    // 2. get tgread id
+    // 2. get thread id
     var threadId = getThreadID(currentUrl);
     // 3. gengerate  thread page.
     // https://twitter-thread.com/api/unroll-thread?id=1643514082681602048
-    // 发送 GET 请求
+    // send GET Request
     GM_xmlhttpRequest({
         method: "GET",
         url: "https://twitter-thread.com/api/unroll-thread?id=" + threadId,
         headers: {
-            "User-Agent": "Mozilla/5.0", // 设置请求头
+            "User-Agent": "Mozilla/5.0",
         },
         onload: function (response) {
-            //  页面跳转
+            //  go to twitter-thread.com to read.
             var redirectUrl = "https://twitter-thread.com/t/" + threadId;
             showMessage("success", "--- enjoy ^_^ ---")
             redirect(redirectUrl);
-            console.log(response.responseText); // 打印响应内容
+            // console.log(response.responseText);
         },
         onerror: function (error) {
             showMessage("error", "Load page error, please try again!")
@@ -81,21 +78,19 @@ function running() {
 
 }
 
-// 检查当前焦点是否在 Twitter 的输入框中
+// Checking if the current focus is in a Twitter input field
 function isInTwitterInput() {
     const activeElement = document.activeElement;
     if (activeElement && activeElement.nodeName === "DIV" && activeElement.getAttribute("role") === "textbox") {
-        // 当前焦点在 Twitter 的输入框中
         return true;
     } else {
-        // 当前焦点不在 Twitter 的输入框中
         return false;
     }
 }
 
 /**
- * 创建 消息通知组件:
- * @param type :类型
+ * create a notification message component
+ * @param type :
  * @returns {HTMLDivElement}
  */
 function createMessageElement(type) {
@@ -116,16 +111,16 @@ function createMessageElement(type) {
     // messageElement.style.opacity = '0';
     messageElement.style.transform = 'translate3d(0, -50%, 0)';
     messageElement.style.pointerEvents = 'none';
-    // 根据消息类型设置不同的 backgroudColor
+    // sett message backgroundColor
     switch (type) {
         case 'success':
-            messageElement.style.backgroundColor = '#67C23A'; // 成功消息背景色
+            messageElement.style.backgroundColor = '#67C23A';
             break;
         case 'info':
-            messageElement.style.backgroundColor = '#909399'; // 信息消息背景色
+            messageElement.style.backgroundColor = '#909399';
             break;
         case 'error':
-            messageElement.style.backgroundColor = '#F56C6C'; // 错误消息背景色
+            messageElement.style.backgroundColor = '#F56C6C';
             break;
         default:
             break;
@@ -136,12 +131,7 @@ function createMessageElement(type) {
     return messageElement;
 }
 
-/**
- * 显示消息
- * @param type
- * @param message
- * @param timeout
- */
+
 function showMessage(type = "success", message, timeout = 1000) {
     const container = createMessageElement(type);
     const content = document.createElement('p');
@@ -204,25 +194,22 @@ function createIconDiv() {
     document.body.appendChild(clickDiv);
 }
 
-// main 函数
+// main method
 (function () {
     'use strict';
     GM_registerMenuCommand('read thread in another page', running, 'f');
     createIconDiv();
-    // 监听按键事件
     document.addEventListener('keydown', function (event) {
         if (event.ctrlKey && event.key === 'f') {
             return;
         }
-        // 如果按下了 f 键，并且事件源对象不是输入框元素
+        // If the f key is pressed and the event target is not an input field
         else if (event.key === 'f' && !isInTwitterInput()) {
-            // 执行您的脚本逻辑
             console.log('f------------------------------------f');
             // alert("just wait")
             showMessage("info", "Loading Page...", 1000)
             running()
         }
-
     }, true);
 })();
 
