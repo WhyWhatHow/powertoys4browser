@@ -5,7 +5,7 @@ Twitter Thread Reader is a userscript that allows users to read Twitter threads 
 
 ## Installation
 
-To use Twitter Thread Reader, you need to install a userscript manager like [Tampermonkey](https://www.tampermonkey.net/) or [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/). After installing the userscript manager, click [here](https://github.com/whywhathow/powertoys4browser/raw/main/js/twitter-thread-reader.js) to install the userscript.
+To use Twitter Thread Reader, you need to install a userscript manager like [Tampermonkey](https://www.tampermonkey.net/) or [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/). After installing the userscript manager, click [`here`](https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/twitter-thread-reader.js) to install the userscript.
 
 ## Usage
 
