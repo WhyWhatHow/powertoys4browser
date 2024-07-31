@@ -60,7 +60,7 @@ function running() {
     // 3. gengerate  thread page.
     // https://twitter-thread.com/api/unroll-thread?id=1643514082681602048
     // 发送 GET 请求
-    GM.xmlHttpRequest({
+    GM_xmlhttpRequest({
         method: "GET",
         url: "https://twitter-thread.com/api/unroll-thread?id=" + threadId,
         headers: {
