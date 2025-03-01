@@ -3,20 +3,24 @@
 // @description  Use arrow keys to navigate between chapters on a web page
 // @match        *://*/chapter/*
 // @match        http*://*/*/*
-// @grant        none
+// @match        http*://www.colamanga.com/*/*/*.html
+// @grant        GM_addStyle
+// @grant        GM_getValue
+// @grant        GM_setValue
 // @icon         https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/icons/comic_icon.ico
 // @namespace    https://whywhathow.github.io/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.2
-
-// @author       whywhathow
-
+// @version      1.6
 // @updateURL    https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/comic_chapter_navgation.js
 // @license      MIT
 
 // ==/UserScript==
 
+const urlSelectorMap = {
+    'colamanga.com': ['.mh_prevbook'],
+    'default': ['.mh_prevbook', '.fanye a', '.post-page-numbers'],
+};
 /**
  * 创建 消息通知组件:
  * @param type :类型
@@ -90,41 +94,63 @@ function showMessage(type = "success", message, timeout = 1000) {
 
 function getPrevAndNextLinks(links, prevLink, nextLink) {
     for (var i = 0; i < links.length; i++) {
+        if (links[i].href === null) continue;
+
+        console.log(links[i].textContent);
         var linkText = links[i].textContent.trim();
         if (linkText === '上一章' || linkText === '上一页') {
             prevLink = links[i];
+            console.log(prevLink);
+
         } else if (linkText === '下一章' || linkText === '下一页') {
             nextLink = links[i];
         }
     }
-    return {prevLink, nextLink};
+    console.log("-----------------------------------");
+
+    console.log(prevLink);
+    console.log(nextLink);
+    console.log("-----------------------------------");
+
+    return { prevLink, nextLink };
 }
 
 
-function getLinks() {
+function getLinks(selectors) {
+    var links = [];
+    console.log('开始查找导航链接...');
 
-    var links = document.querySelectorAll('.fanye a');
-    if (links.length === 0) { // different webstite
-        links = document.getElementsByClassName('post-page-numbers');
+    // 依次尝试每个选择器
+    for (const selector of selectors) {
+        // console.log(`尝试选择器: ${selector}`);
+        const elements = document.querySelectorAll(selector);
+        if (elements.length > 0) {
+            console.log(`找到 ${elements.length} 个匹配元素`);
+            links = Array.from(elements);
+            break;
+        }
     }
-    return links;
 
-}
-
-(function () {
-    'use strict';
-    console.log(" chapter ---- navgation -----------")
-
-    var links = getLinks();
+    // 如果没有找到任何链接，尝试查找所有包含特定文本的链接
     if (links.length === 0) {
-        return ;
+        // console.log('使用文本内容匹配查找链接...');
+        const allLinks = document.getElementsByTagName('a');
+        links = Array.from(allLinks).filter(link => {
+            const text = link.textContent.trim();
+            return text === '上一章' || text === '下一章' ||
+                text === '上一页' || text === '下一页' ||
+                text.includes('上一') || text.includes('下一');
+        });
+        console.log(`通过文本内容找到 ${links.length} 个链接`);
     }
 
-    var prevLink = null;
-    var nextLink = null;
-    const __ret = getPrevAndNextLinks(links, prevLink, nextLink);
-    prevLink = __ret.prevLink;
-    nextLink = __ret.nextLink;
+    return links;
+}
+function bindKeyboardEvents(prevLink, nextLink) {
+
+    console.log("-----------------bindKeyboardEvents----------------------")
+    console.log("prevLink : " + prevLink);
+    console.log(nextLink);
 
     document.addEventListener('keydown', function (event) {
         if (event.key === 'p' || event.key === 'ArrowLeft') { // left arrow key
@@ -145,4 +171,71 @@ function getLinks() {
             }
         }
     });
+}
+
+
+// 获取当前 URL 对应的选择器
+function getSelectorForCurrentURL() {
+    const currentURL = window.location.hostname;
+    for (const [urlPattern, selector] of Object.entries(urlSelectorMap)) {
+        if (currentURL.includes(urlPattern)) {
+            return selector;
+        }
+    }
+    return urlSelectorMap.default;
+}
+// 检查目标元素是否存在
+function checkElements(selector) {
+    const targetElements = document.querySelectorAll(selector);
+    if (targetElements.length > 0) {
+        console.log('找到目标元素，初始化导航...');
+        return true;
+    }
+    return false;
+}
+
+// 实现页面右键可以使用，以及键盘按键可以使用。
+function initChapterNavigation() {
+    console.log("chapter navigation initialization started");
+
+    let checkInterval;
+    let timeoutId;
+    // 配置不同网站的选择器映
+    const selectors = getSelectorForCurrentURL();
+    // 如果初始检查未找到元素，启动定时检查
+    // Wait for elements to be found
+
+    const intervalId= setInterval(() => {
+        if (checkElements(selectors)) {
+            clearInterval(intervalId);
+            running();
+        }
+    }, 500);
+
+
+}
+
+
+function running() {
+    console.log("---------running--------------");
+    const selector = getSelectorForCurrentURL();
+    var links = getLinks(selector);
+    console.log("Found navigation links:", links);
+
+    var prevLink = null;
+    var nextLink = null;
+    const __ret = getPrevAndNextLinks(links, prevLink, nextLink);
+    prevLink = __ret.prevLink;
+    nextLink = __ret.nextLink;
+
+    if (prevLink || nextLink) {
+        // 绑定键盘事件
+        bindKeyboardEvents(prevLink, nextLink);
+    }
+}
+
+
+(function () {
+    'use strict';
+    initChapterNavigation();
 })();
