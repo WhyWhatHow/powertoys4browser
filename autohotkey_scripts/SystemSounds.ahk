@@ -21,6 +21,7 @@ ToggleSoundOutputDevice(device){
 
     }
     ;MsgBox("Selected device: " device)
+    ; todo must need to change your nircmd position
     Run("G:/tool/AutoHotkey/nircmd-x64/nircmd.exe setdefaultsounddevice " device)
 
 }
