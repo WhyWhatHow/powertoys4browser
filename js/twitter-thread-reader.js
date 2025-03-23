@@ -3,7 +3,7 @@
 // @namespace    https://github.com/WhyWhatHow/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.8
+// @version      1.9
 // @description  when we read Twitter|X thread, it's sucks. so I try to generate twitter thread reader in one single page, so i can easily read and share. Anyway, it's easy to read twitter's thread.
 // @author       whywhathow
 // @match        https://x.com/
@@ -35,9 +35,11 @@ function getThreadID(url) {
 }
 
 function redirect(url) {
-    console.log("准备跳转...");
-    console.log(url);
-    // window.location.href=url;
+    if (!url) {
+        showMessage("error", CONFIG.MESSAGES.ERROR_INVALID_URL);
+        return;
+    }
+    console.log("Redirecting to:", url);
     GM_openInTab(url);
 
 }
@@ -81,11 +83,31 @@ function running() {
 // Checking if the current focus is in a Twitter input field
 function isInTwitterInput() {
     const activeElement = document.activeElement;
-    if (activeElement && activeElement.nodeName === "DIV" && activeElement.getAttribute("role") === "textbox") {
+    console.log(activeElement);
+
+    // Check for standard input elements
+    if (activeElement && (activeElement.nodeName === "INPUT" || activeElement.nodeName === "TEXTAREA")) {
         return true;
-    } else {
-        return false;
     }
+
+    // Check for contenteditable divs and Twitter's custom textbox
+    if (activeElement && activeElement.nodeName === "DIV") {
+        // Check for role="textbox" (Twitter's custom input)
+        if (activeElement.getAttribute("role") === "textbox") {
+            return true;
+        }
+        // Check for contenteditable divs
+        if (activeElement.getAttribute("contenteditable") === "true") {
+            return true;
+        }
+        // Check for search box specific classes or attributes
+        if (activeElement.getAttribute("data-testid")?.includes("search") ||
+            activeElement.className.toLowerCase().includes("search")) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**
