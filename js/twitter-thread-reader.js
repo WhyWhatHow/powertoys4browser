@@ -84,12 +84,12 @@ function running() {
 function isInTwitterInput() {
     const activeElement = document.activeElement;
     console.log(activeElement);
-    
+
     // Check for standard input elements
     if (activeElement && (activeElement.nodeName === "INPUT" || activeElement.nodeName === "TEXTAREA")) {
         return true;
     }
-    
+
     // Check for contenteditable divs and Twitter's custom textbox
     if (activeElement && activeElement.nodeName === "DIV") {
         // Check for role="textbox" (Twitter's custom input)
@@ -106,7 +106,7 @@ function isInTwitterInput() {
             return true;
         }
     }
-    
+
     return false;
 }
 
