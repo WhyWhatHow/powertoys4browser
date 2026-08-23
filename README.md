@@ -64,12 +64,6 @@ If you find any issues or have any suggestions for PowerToys4Browser, feel free 
 
 PowerToys4Browser is licensed under the [MIT License](https://github.com/whywhathow/powertoys4browser/blob/main/LICENSE).
 
-## Connect
-
-- nash.whywhathow@gmail.com
-- whywhathow.fun@outlook.com
-- 1246389103@qq.com
-
 ## Acknowledgements
 
 <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="jetBrains-teams" style="height:200px; position: left;" />

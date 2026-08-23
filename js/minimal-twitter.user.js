@@ -13,7 +13,6 @@
 // @grant        GM_addStyle
 // @grant        GM_registerMenuCommand
 // @grant        GM_openInTab
-// @connect      raw.githubusercontent.com
 // @run-at       document-idle
 // @noframes
 // ==/UserScript==
