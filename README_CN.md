@@ -12,6 +12,10 @@ PowerToys4Browser 是一个油猴脚本集合，为 Web 浏览器提供额外的
 
 PowerToys4Browser 包括以下用户脚本：
 
+### X Comment Bot Blocker（X 评论机器人屏蔽器）
+
+一个自动屏蔽 X（Twitter）评论区垃圾/机器人账号的用户脚本：选取"机器人模板评论"或可疑用户名后，一键扫描当前推文评论区，文本相似、用户名规则或评论关键词任一命中即自动屏蔽。内置高频垃圾规则模板、白名单、试运行（仅标记）模式与屏蔽记录一键解封。**注意：启发式规则可能误封正常用户，请先用试运行模式确认命中结果。** 有关更多信息，请参见 [doc/x-comment-bot-blocker.md](doc/x-comment-bot-blocker.md)。
+
 ### Minimal Twitter
 
 本脚本是 Typefully 的 [Minimal Twitter Chrome 插件](https://github.com/typefully/minimal-twitter) 的轻量用户脚本翻版：为 Twitter/X 打造的简洁极简主题，内置设置面板——时间线宽度、左侧导航显隐配置（Premium、Creator Studio、Grok 等）、Grok 页面排版修复、多语言设置面板等。默认提供一套开箱即用的配置，无需任何设置。有关更多信息，请参见 [doc/minimal-twitter.md](doc/minimal-twitter.md)。
