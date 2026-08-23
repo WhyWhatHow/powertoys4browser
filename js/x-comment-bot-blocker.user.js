@@ -4,7 +4,7 @@
 // @namespace     xcbb
 // @version       0.14.4
 // @description   选取"机器人模板评论"或"不合理用户名(昵称/@handle)",一键扫描当前推文评论区,文本相似/用户名/评论关键词任一命中即自动屏蔽对应账号。内置约炮引流类高频规则模板(一键加载)、高频特征词挖掘、屏蔽记录(误伤可追溯/可导出)、数据全量导出与 Gist 同步,支持相似度阈值、白名单、试运行(仅标记)模式。⚠ 注意: 启发式规则可能误封正常用户,首次使用建议先用"仅标记(试运行)"模式观察命中结果。
-// @description:en Select bot template comments, scan the current tweet's replies for similar text, and auto-block those accounts.
+// @description:en Pick a bot template comment (or an abusive username), scan the current tweet's replies, and automatically block matching spam/bot accounts — three-way matching: text similarity, username rules, and comment keywords. Built-in high-frequency rule templates, whitelist, dry-run (mark-only) mode, block log with one-click unblock, full data export and Gist sync. ⚠ Heuristic rules may false-positive normal users: try dry-run mode first.
 // @author        kikuxdev
 // @homepage      https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL    https://github.com/WhyWhatHow/powertoys4browser/issues
