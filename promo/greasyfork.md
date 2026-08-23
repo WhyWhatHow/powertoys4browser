@@ -94,3 +94,79 @@
 - [ ] 截图 640×400 各 3-5 张(真实界面优先)
 - [ ] 发布后在 GreasyFork 页面上补一句中文备注(可选): 感谢安装, 反馈请走 GitHub issues
 - [ ] 记录两个脚本的 GreasyFork 页面 URL, 回填到 README 安装段落(提升仓库可信度)
+---
+
+## 四、X Comment Bot Blocker — 附加信息(最终版, 直接粘贴)
+
+```
+Scan a tweet's reply section and auto-block spam/bot accounts by picking
+one bot template comment or a suspicious username.
+
+▸ How it works
+- Three-way matching: text similarity / username rules / comment keywords
+- Blocks via X's own UI (menu → Block → confirm), no internal APIs
+- Built-in high-frequency spam rule templates (one-click load)
+- Whitelist, adjustable similarity threshold, per-block confirm
+- Rate limiting (configurable block interval)
+
+▸ ⚠ Read before enabling auto-block
+Heuristic rules are NOT 100% accurate — normal users' nicknames or comments
+can be matched by mistake. Please:
+1. Run in "mark-only (dry-run)" mode first and review the hits
+2. Avoid overly broad keywords; prefer specific template comments
+3. Wrongly blocked someone? ⚙ Settings → Data → block log → open their
+   profile to unblock, or add them to the whitelist
+4. Auto-blocking may violate X ToS; use at your own risk
+
+▸ Data
+Everything stays local (GM storage). Export/import JSON; optional Gist sync.
+
+▸ Recent changes
+- v0.14.5  Full English metadata (@description:en)
+- v0.14.4  Vendored into PowerToys4Browser; false-positive warnings
+- v0.14.3  Public stable gist as default remote data source
+- v0.14.0  Block log: record reason/time, one-click unblock + whitelist
+- v0.13.0  Keyword matching isolated from username list (fewer false hits)
+- v0.12.0  Three-way matching + settings panel
+
+Full changelog: https://github.com/WhyWhatHow/powertoys4browser/blob/master/doc/x-comment-bot-blocker.md
+
+Feedback & issues: https://github.com/WhyWhatHow/powertoys4browser/issues
+Source: https://github.com/WhyWhatHow/powertoys4browser
+```
+
+---
+
+## 五、X Comment Bot Blocker — 更新日志(完整版, 存档)
+
+> 源:上游 CHANGELOG.md + 本仓库记录。格式遵循 Keep a Changelog 精神, 版本号遵循 SemVer。
+
+### 0.14.5 (2026-08)
+- 补全 `@description:en` 英文元数据(三维匹配/试运行/屏蔽记录/误封警告)。
+
+### 0.14.4 (2026-08)
+- 收录进 powertoys4browser;新增 4 处误封提醒(元数据、头部 NOTICE 块、面板横幅、启动日志);安装地址指向本仓库;保留上游 kikuxdev 署名。
+
+### 0.14.3 (2026-08-09)
+- 内置公开 gist 为默认远程数据源,自动同步开箱即用;私有/secret gist URL 严禁写入脚本(URL 即访问钥匙)。
+
+### 0.14.2 (2026-08-09)
+- 屏蔽记录卡片新增独立 [导出] 按钮(blocklog.json);数据页打开时列表实时刷新。
+
+### 0.14.1 (2026-08-09)
+- 修复扫描通知条淡出后仍拦截点击(补 pointer-events:none);全高模式下通知下移。
+
+### 0.14.0 (2026-08-09)
+- 新增近期屏蔽记录(blocklog):{handle, 昵称, 时间, 命中原因},按 handle 去重、上限 300 条;🏠 跳主页手动解封 / ✓ 一键加白名单 / ✕ 删除 / 清空;随 JSON 导出、Gist 同步、JSON 导入自动携带——误伤处理闭环。
+
+### 0.13.1 (2026-08-09)
+- 禁用按钮改类禁用实现:保留点击事件,悬停显示原因,点击 toast 提示。
+
+### 0.13.0 (2026-08-09)
+- 修复评论关键词误屏蔽:关键词匹配改为独立列表(内置 63 条低风险词排除 9 个日常常见词),用户名名单只匹配用户名;护眼纸感主题(29 个 CSS 变量)。
+
+### 0.12.14 (2026-08-09)
+- 扫描结束二次复核(解决"刷新后才能识别");闲置判定改用页面高度。
+
+### 0.12.x (2026-08-09)
+- 0.12.13 扫描进行中通知;0.12.12 异常兜底+去重上限 3 万;0.12.11 修复提前停止/等待全文渲染;0.12.10 菜单快捷扫描保持面板状态;0.12.9 轻量完成通知;0.12.8 修复 grant 缺失;0.12.7 TM 原生菜单+停靠下拉;0.12.6 圆点直扫+进度环+计数徽标;0.12.5/0.12.4 圆点左键/右键交互;0.12.3 静默屏蔽+快捷菜单;0.12.0 三维匹配+五 Tab 设置页+自动同步。
