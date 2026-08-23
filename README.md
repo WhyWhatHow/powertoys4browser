@@ -13,6 +13,10 @@ To use PowerToys4Browser, you need to install a userscript manager like [Tamperm
 ## Scripts
 
 PowerToys4Browser includes the following userscripts:
+
+### Minimal Twitter
+A clean, minimal theme for Twitter/X with a built-in settings panel: timeline width, navigation visibility (Premium, Creator Studio, Grok, etc.), Grok-safe layout fixes, multi-language panel and more. For more information, please refer to [doc/minimal-twitter.md](doc/minimal-twitter.md).
+
 ### Twitter Thread Reader
 A userscript that allows users to read Twitter threads in one single page. For more information, please refer to [doc/twitter-thread-reader.md](doc/twitter-thread-reader.md).
 

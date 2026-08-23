@@ -12,6 +12,10 @@ PowerToys4Browser 是一个油猴脚本集合，为 Web 浏览器提供额外的
 
 PowerToys4Browser 包括以下用户脚本：
 
+### Minimal Twitter
+
+一个为 Twitter/X 打造的简洁极简主题用户脚本，内置设置面板：时间线宽度、左侧导航显隐配置（Premium、Creator Studio、Grok 等）、Grok 页面排版修复、多语言设置面板等。默认提供一套开箱即用的配置，无需任何设置。有关更多信息，请参见 [doc/minimal-twitter.md](doc/minimal-twitter.md)。
+
 ### Twitter Thread Reader:
 
 一个用户脚本，允许用户在单个页面中阅读 Twitter thread。有关更多信息，请参见 [doc/twitter-thread-reader.md](doc/twitter-thread-reader.md)。
