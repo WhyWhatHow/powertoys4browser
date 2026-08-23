@@ -20,7 +20,7 @@ It ships with built-in rule templates (porn/gambling-scam promotion words, low/m
 To use X Comment Bot Blocker, you need to install a userscript manager like [Tampermonkey](https://www.tampermonkey.net/) or [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/). After installing the userscript manager, click [`here`](https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/x-comment-bot-blocker.user.js) to install the userscript.
 
 - Works on `x.com` and `twitter.com`
-- Current version: **v0.14.4**
+- Current version: **v0.14.5**
 
 ## Usage
 
@@ -49,5 +49,6 @@ All data (templates, rules, corpus, block log) stays in local userscript storage
 
 ## Changelog
 
+- **v0.14.5** — Full English metadata (`@description:en`): three-way matching, dry-run mode, block log, false-positive warning.
 - **v0.14.4** — Vendored into powertoys4browser; prominent false-positive warnings added (header notice, panel banner, startup log); install URLs point to this repo.
 - Upstream: [kikuxdev/X-Comment-Bot-Blocker](https://github.com/kikuxdev/X-Comment-Bot-Blocker) (v0.14.3).

@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name         Minimal Twitter
+// @name:zh       Minimal Twitter — X/Twitter 极简主题
 // @namespace    https://github.com/WhyWhatHow/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.0.18
+// @version      1.0.19
 // @description  Refine and clean up the Twitter interface, and customize your experience. A clean and minimal theme for Twitter/X. Userscript adaptation of the Chrome extension from https://github.com/typefully/minimal-twitter (by Typefully), implemented by whywhathow.
+// @description:zh  为 X/Twitter 打造极简主题:图标化左侧导航（悬停显示标签）、时间线限宽、Premium/Grok/Creator Studio 等导航项逐项显隐、Grok 页面零干扰、内置中/英/繁三语设置面板、自定义 CSS 注入。Typefully 同名 Chrome 插件的轻量油猴翻版，MIT 开源免费。
 // @author       whywhathow
 // @match        https://twitter.com/*
 // @match        https://x.com/*
