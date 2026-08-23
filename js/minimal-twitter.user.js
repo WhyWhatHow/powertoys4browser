@@ -4,7 +4,7 @@
 // @namespace    https://github.com/WhyWhatHow/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.0.21
+// @version      1.0.22
 // @description  Refine and clean up the Twitter interface, and customize your experience. A clean and minimal theme for Twitter/X. Userscript adaptation of the Chrome extension from https://github.com/typefully/minimal-twitter (by Typefully), implemented by whywhathow.
 // @description:zh  为 X/Twitter 打造极简主题:图标化左侧导航（悬停显示标签）、时间线限宽、Premium/Grok/Creator Studio 等导航项逐项显隐、Grok 页面零干扰、内置中/英/繁三语设置面板、自定义 CSS 注入。Typefully 同名 Chrome 插件的轻量油猴翻版，MIT 开源免费。
 // @author       whywhathow
@@ -380,14 +380,20 @@
     return document.getElementById('mt-style-' + id);
   }
 
-  // Grok 页面路由检测（/i/grok 及其子路由）。Grok 布局与三栏时间线差异大，
+  // Grok 页面路由检测（/i/grok 及 /i/chat 及其子路由）。Grok/chat 布局与三栏时间线差异大，
   // 冲突的布局规则需在其下豁免：给根元素打标记类，配合 html:not(.mt-grok-page) 作用域。
   function isGrokRoute() {
-    return /(^|\/)i\/grok($|\/)/.test(window.location.pathname);
+    return /(^|\/)i\/(grok|chat)($|\/)/.test(window.location.pathname);
   }
 
   function syncGrokRouteFlag() {
     document.documentElement.classList.toggle('mt-grok-page', isGrokRoute());
+  }
+
+  // 紧凑侧栏路由：私信页 / Grok、Chat 聊天页——X 会把左侧导航压缩成紧凑布局(icon 化),
+  // 注入额外项会撑出滚动条或露出突兀的文字标签, 这些路由一律保持 X 原生导航。
+  function isCompactSidebarRoute() {
+    return isGrokRoute() || window.location.pathname.startsWith('/messages');
   }
 
   function debounce(func, timeout = 300) {
@@ -1275,9 +1281,9 @@
   function pinListsToSidebar() {
     const nav = document.querySelector(SELECTORS.leftSidebarLinks);
     if (!nav) return;
-    // 私信页 X 会把左侧导航压缩成紧凑布局：注入额外项会挤爆 nav 容器
-    // 出现滚动条（Lists 仍可从 More 菜单访问），故私信页不注入并移除已注入项
-    if (window.location.pathname.startsWith('/messages')) {
+    // 紧凑侧栏路由（私信/Grok/chat 页）：X 会把导航压缩成 icon 布局，注入额外项
+    // 会撑出滚动条或显示突兀的 "Lists" 文字（仍可从 More 菜单访问），故不注入并移除已注入项
+    if (isCompactSidebarRoute()) {
       document.getElementById('mt-sidebar-lists')?.remove();
       return;
     }
@@ -1336,8 +1342,8 @@
   function moveProfileLinkToBottom() {
     const nav = document.querySelector(SELECTORS.leftSidebarLinks);
     if (!nav) return;
-    // 私信页保持 X 原生顺序，不做移动（避免紧凑布局下内容超高出现滚动条）
-    if (window.location.pathname.startsWith('/messages')) return;
+    // 紧凑侧栏路由保持 X 原生顺序，不做移动（避免紧凑布局下内容超高出现滚动条）
+    if (isCompactSidebarRoute()) return;
     const profile = nav.querySelector('[data-testid="AppTabBar_Profile_Link"]');
     if (!profile || profile.parentElement !== nav) return;
     const switcher = document.querySelector(SELECTORS.accountSwitcherButton);
