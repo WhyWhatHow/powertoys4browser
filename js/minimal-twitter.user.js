@@ -3,7 +3,7 @@
 // @namespace    https://github.com/WhyWhatHow/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.0.17
+// @version      1.0.18
 // @description  Refine and clean up the Twitter interface, and customize your experience. A clean and minimal theme for Twitter/X. Userscript adaptation of the Chrome extension from https://github.com/typefully/minimal-twitter (by Typefully), implemented by whywhathow.
 // @author       whywhathow
 // @match        https://twitter.com/*
@@ -1360,6 +1360,10 @@
     if (isGrokRoute()) {
       removeStyles('timelineWidth');
       removeStyles('navigation-position');
+    } else if (window.location.pathname.startsWith('/messages')) {
+      // 私信页由 customDMsAndSearchStyle 接管侧栏布局（flex 弹性宽度、非固定）。
+      // 这里若把 navigation-position 加回去，会与 flex 规则叠加导致左侧导航排版错乱。
+      removeStyles('navigation-position');
     } else {
       changeTimelineWidth(settings.timelineWidth);
       updateLeftSidebarPositioning();
@@ -2019,8 +2023,33 @@
     init();
   }
 
+  // SPA 路由感知：X 点击左侧导航（如私信/chat 按钮）走 pushState/replaceState，
+  // 不会触发 popstate；而 MutationObserver 又会跳过 nav 内部的变动（isMutationSkippable），
+  // 导致路由相关样式（私信页布局）与导航栏修复在点击导航后不生效。包装 history API 兜底。
+  let lastRoutePath = window.location.pathname;
+  function handleRouteChange() {
+    if (!isInitialized || settings.extensionStatus === 'off') return;
+    if (window.location.pathname === lastRoutePath) return;
+    lastRoutePath = window.location.pathname;
+    changeNavigationButtonsLabels(settings.navigationButtonsLabels); // 私信页专属布局/标签样式
+    runDynamicFeatures();
+    // X 渲染新页面有延迟，补两次兜底（各函数均幂等）
+    setTimeout(runDynamicFeatures, 400);
+    setTimeout(runDynamicFeatures, 1200);
+  }
+  ['pushState', 'replaceState'].forEach((type) => {
+    const orig = history[type];
+    if (typeof orig !== 'function') return;
+    history[type] = function (...args) {
+      const ret = orig.apply(this, args);
+      handleRouteChange();
+      return ret;
+    };
+  });
+
   window.addEventListener('popstate', debounce(() => {
     if (isInitialized && settings.extensionStatus !== 'off') {
+      lastRoutePath = window.location.pathname; // 同步记录，避免后续同路径 pushState 被误判为未变化
       setTimeout(() => {
         applyAllFeatures();
         runDynamicFeatures();
