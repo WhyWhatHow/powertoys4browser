@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>Minimal Twitter — 宣传海报</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --ink: #0f1419;
+    --dim: #536471;
+    --faint: #8b98a5;
+    --line: #e6eaed;
+    --accent: #1d9bf0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: #101214;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .stage { width: 1600px; height: 900px; flex: none; transform-origin: center center; }
+  .poster {
+    width: 1600px; height: 900px;
+    background: var(--bg); color: var(--ink);
+    font-family: -apple-system, "SF Pro Text", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    display: flex; flex-direction: column;
+    padding: 64px 88px 56px;
+    position: relative;
+  }
+
+  /* ---- header ---- */
+  .head { display: flex; align-items: baseline; gap: 16px; }
+  .wordmark { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .head .sep { color: var(--faint); }
+  .head .series { font-size: 18px; color: var(--dim); letter-spacing: 0.14em; }
+  .ver {
+    margin-left: auto; font-size: 18px; color: var(--dim);
+    border: 1.5px solid var(--line); border-radius: 999px; padding: 6px 18px;
+    background: #fff;
+  }
+
+  /* ---- main grid ---- */
+  .main { flex: 1; display: grid; grid-template-columns: 1.15fr 1fr; gap: 72px; align-items: center; min-height: 0; }
+  .eyebrow {
+    font-size: 20px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--dim); font-weight: 600; margin-bottom: 28px;
+  }
+  .eyebrow b { color: var(--accent); font-weight: 600; }
+  h1 {
+    margin: 0 0 30px;
+    font-size: 108px; line-height: 1.08; font-weight: 800; letter-spacing: -0.02em;
+    text-wrap: pretty;
+  }
+  h1 .thin { font-weight: 300; }
+  .sub { font-size: 29px; line-height: 1.7; color: var(--dim); margin: 0 0 40px; max-width: 560px; text-wrap: pretty; }
+  .chips { display: flex; flex-wrap: wrap; gap: 14px; max-width: 620px; }
+  .chip {
+    font-size: 21px; font-weight: 500; color: var(--ink);
+    background: #fff; border: 1.5px solid var(--line); border-radius: 12px;
+    padding: 12px 22px;
+  }
+  .chip.accent { color: #fff; background: var(--accent); border-color: var(--accent); font-weight: 600; }
+
+  /* ---- visual: mini X window ---- */
+  .win {
+    background: #fff; border: 1.5px solid var(--line); border-radius: 24px;
+    box-shadow: 0 24px 60px rgba(15, 20, 25, 0.10);
+    height: 520px; display: flex; overflow: hidden;
+  }
+  .rail {
+    width: 96px; border-right: 1.5px solid var(--line);
+    display: flex; flex-direction: column; align-items: center;
+    padding: 26px 0; gap: 22px;
+  }
+  .rail .dot { width: 44px; height: 44px; border-radius: 50%; background: var(--bg); border: 1.5px solid var(--line); }
+  .rail .dot.on { background: var(--ink); border-color: var(--ink); }
+  .rail .post { width: 60px; height: 36px; border-radius: 999px; background: var(--accent); margin-top: 8px; }
+  .feed { flex: 1; padding: 34px 38px; display: flex; flex-direction: column; gap: 30px; }
+  .tweet { display: flex; gap: 18px; align-items: flex-start; }
+  .avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--bg); border: 1.5px solid var(--line); flex: none; }
+  .lines { flex: 1; display: flex; flex-direction: column; gap: 12px; padding-top: 4px; }
+  .bar { height: 13px; border-radius: 7px; background: var(--bg); border: 1px solid var(--line); }
+  .bar.name { width: 34%; background: var(--line); border-color: var(--line); }
+  .bar.w80 { width: 82%; } .bar.w65 { width: 65%; } .bar.w45 { width: 45%; }
+
+  /* ---- footer ---- */
+  .foot { display: flex; align-items: center; gap: 20px; margin-top: 34px; padding-top: 26px; border-top: 1.5px solid var(--line); }
+  .foot .repo { font-size: 21px; font-weight: 600; letter-spacing: 0.01em; }
+  .foot .tag { margin-left: auto; font-size: 19px; color: var(--dim); }
+</style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="poster" data-screen-label="minimal-twitter-poster">
+
+      <header class="head">
+        <span class="wordmark">PowerToys4Browser</span>
+        <span class="sep">/</span>
+        <span class="series">油猴脚本系列</span>
+        <span class="ver">v1.0.18 · MIT 开源</span>
+      </header>
+
+      <main class="main">
+        <section>
+          <p class="eyebrow"><b>Minimal Twitter</b> · 极简主题脚本</p>
+          <h1>把 X<br><span class="thin">还给内容。</span></h1>
+          <p class="sub">图标化左侧导航，悬停才显示标签；时间线限宽去杂讯；Premium、Grok、Creator Studio……每个 UI 角落都有独立开关。</p>
+          <div class="chips">
+            <span class="chip accent">Tampermonkey 安装即用</span>
+            <span class="chip">设置面板三语</span>
+            <span class="chip">Grok 页面零干扰</span>
+            <span class="chip">自定义 CSS 注入</span>
+          </div>
+        </section>
+
+        <section class="win" aria-label="界面示意：图标化的左侧导航与干净的时间线">
+          <div class="rail">
+            <span class="dot on"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="post"></span>
+          </div>
+          <div class="feed">
+            <div class="tweet"><span class="avatar"></span><span class="lines"><span class="bar name"></span><span class="bar w80"></span><span class="bar w65"></span></span></div>
+            <div class="tweet"><span class="avatar"></span><span class="lines"><span class="bar name"></span><span class="bar w65"></span><span class="bar w45"></span></span></div>
+            <div class="tweet"><span class="avatar"></span><span class="lines"><span class="bar name"></span><span class="bar w80"></span></span></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="foot">
+        <span class="repo">github.com/WhyWhatHow/powertoys4browser</span>
+        <span class="tag">致敬 Typefully/minimal-twitter · 免费开源</span>
+      </footer>
+
+    </div>
+  </div>
+  <script>
+    (function () {
+      var fit = function () {
+        var s = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
+        document.getElementById('stage').style.transform = 'scale(' + s + ')';
+      };
+      window.addEventListener('resize', fit);
+      fit();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>X Comment Bot Blocker — 宣传海报</title>
+<style>
+  :root {
+    --bg: #f7f5ef;
+    --card: #ffffff;
+    --ink: #262b26;
+    --dim: #6f766d;
+    --line: #ddd8cc;
+    --accent: #4e8a6d;
+    --danger: #b85252;
+    --warn: #a3741f;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: #14161a;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .stage { width: 1600px; height: 900px; flex: none; transform-origin: center center; }
+  .poster {
+    width: 1600px; height: 900px;
+    background: var(--bg); color: var(--ink);
+    font-family: -apple-system, "SF Pro Text", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    display: flex; flex-direction: column;
+    padding: 64px 88px 56px;
+    position: relative;
+  }
+
+  /* ---- header ---- */
+  .head { display: flex; align-items: baseline; gap: 16px; }
+  .wordmark { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .head .sep { color: var(--dim); opacity: .5; }
+  .head .series { font-size: 18px; color: var(--dim); letter-spacing: 0.14em; }
+  .ver {
+    margin-left: auto; font-size: 18px; color: var(--dim);
+    border: 1.5px solid var(--line); border-radius: 999px; padding: 6px 18px;
+    background: var(--card);
+  }
+
+  /* ---- main grid ---- */
+  .main { flex: 1; display: grid; grid-template-columns: 1.15fr 1fr; gap: 72px; align-items: center; min-height: 0; }
+  .eyebrow {
+    font-size: 20px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--dim); font-weight: 600; margin-bottom: 28px;
+  }
+  .eyebrow b { color: var(--accent); font-weight: 600; }
+  h1 {
+    margin: 0 0 30px;
+    font-size: 104px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em;
+    text-wrap: pretty;
+  }
+  h1 .thin { font-weight: 300; }
+  h1 .strike { position: relative; white-space: nowrap; }
+  h1 .strike::after {
+    content: ""; position: absolute; left: -2%; right: -2%; top: 54%;
+    height: 7px; border-radius: 4px; background: var(--danger); transform: rotate(-2deg);
+  }
+  .sub { font-size: 28px; line-height: 1.7; color: var(--dim); margin: 0 0 36px; max-width: 580px; text-wrap: pretty; }
+  .chips { display: flex; flex-wrap: wrap; gap: 14px; max-width: 620px; }
+  .chip {
+    font-size: 21px; font-weight: 500; color: var(--ink);
+    background: var(--card); border: 1.5px solid var(--line); border-radius: 12px;
+    padding: 12px 22px;
+  }
+  .chip.accent { color: #fff; background: var(--accent); border-color: var(--accent); font-weight: 600; }
+
+  /* ---- visual: comment cards ---- */
+  .board { display: flex; flex-direction: column; gap: 18px; }
+  .card {
+    background: var(--card); border: 1.5px solid var(--line); border-radius: 18px;
+    padding: 22px 24px; display: flex; align-items: center; gap: 18px;
+    box-shadow: 0 14px 34px rgba(38, 43, 38, 0.07);
+  }
+  .card.flagged { border-color: var(--danger); }
+  .card.review { border-style: dashed; border-color: var(--warn); }
+  .avatar {
+    width: 52px; height: 52px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 700; color: #fff;
+    background: var(--line); color: var(--dim);
+  }
+  .card:nth-child(2) .avatar { background: var(--danger); color: #fff; }
+  .card:nth-child(3) .avatar { background: var(--warn); color: #fff; }
+  .who { min-width: 0; flex: 1; }
+  .name { font-size: 21px; font-weight: 700; line-height: 1.3; }
+  .handle { font-size: 18px; color: var(--dim); line-height: 1.4; }
+  .text { font-size: 19px; color: var(--dim); margin-top: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 330px; }
+  .stamp {
+    flex: none; font-size: 18px; font-weight: 700; letter-spacing: 0.06em;
+    padding: 8px 16px; border-radius: 10px;
+  }
+  .stamp.blocked { color: #fff; background: var(--danger); }
+  .stamp.review { color: var(--warn); border: 2px dashed var(--warn); }
+  .scan {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 19px; color: var(--accent); font-weight: 600;
+    padding-left: 6px;
+  }
+  .scan .ring {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 3px solid var(--line); border-top-color: var(--accent);
+  }
+  .notice {
+    margin-top: 6px; padding: 14px 20px; border-radius: 12px;
+    border: 1.5px solid var(--warn); color: var(--warn);
+    font-size: 18px; line-height: 1.55; background: rgba(163, 116, 31, 0.06);
+    text-wrap: pretty;
+  }
+  .notice b { font-weight: 700; }
+
+  /* ---- footer ---- */
+  .foot { display: flex; align-items: center; gap: 20px; margin-top: 34px; padding-top: 26px; border-top: 1.5px solid var(--line); }
+  .foot .repo { font-size: 21px; font-weight: 600; letter-spacing: 0.01em; }
+  .foot .tag { margin-left: auto; font-size: 19px; color: var(--dim); }
+</style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="poster" data-screen-label="x-comment-bot-blocker-poster">
+
+      <header class="head">
+        <span class="wordmark">PowerToys4Browser</span>
+        <span class="sep">/</span>
+        <span class="series">油猴脚本系列</span>
+        <span class="ver">v0.14.4 · MIT 开源</span>
+      </header>
+
+      <main class="main">
+        <section>
+          <p class="eyebrow"><b>X Comment Bot Blocker</b> · 评论区净化脚本</p>
+          <h1>评论区<span class="strike">垃圾号</span>，<br><span class="thin">一键扫干净。</span></h1>
+          <p class="sub">选一条 bot 评论当模板——用户名、文本相似、评论关键词三维匹配，命中的引流号自动屏蔽。</p>
+          <div class="chips">
+            <span class="chip accent">Tampermonkey 安装即用</span>
+            <span class="chip">试运行防误伤</span>
+            <span class="chip">屏蔽记录一键解封</span>
+            <span class="chip">纯本地运行</span>
+          </div>
+        </section>
+
+        <section class="board" aria-label="界面示意：评论扫描结果">
+          <div class="card flagged">
+            <span class="avatar">约</span>
+            <span class="who">
+              <span class="name">福利姬小美</span><br>
+              <span class="handle">@meili_88421</span>
+              <span class="text">同城线下无偿约，快速通道私我…</span>
+            </span>
+            <span class="stamp blocked">已屏蔽</span>
+          </div>
+          <div class="card flagged">
+            <span class="avatar">刷</span>
+            <span class="who">
+              <span class="name">兼职日赚中心</span><br>
+              <span class="handle">@rizhuan_2024x</span>
+              <span class="text">刷单返利，日入三位数不是梦…</span>
+            </span>
+            <span class="stamp blocked">已屏蔽</span>
+          </div>
+          <div class="card review">
+            <span class="avatar">?</span>
+            <span class="who">
+              <span class="name">某个普通用户</span><br>
+              <span class="handle">@someone_normal</span>
+              <span class="text">这条评论看起来有点像模板…</span>
+            </span>
+            <span class="stamp review">仅标记</span>
+          </div>
+          <p class="scan"><span class="ring"></span>扫描中 · 已评估 47 条评论</p>
+          <p class="notice"><b>误封提醒：</b>启发式规则无法保证 100% 准确，可能误封正常用户——请先用「仅标记」试运行，误封可在屏蔽记录中一键解封。</p>
+        </section>
+      </main>
+
+      <footer class="foot">
+        <span class="repo">github.com/WhyWhatHow/powertoys4browser</span>
+        <span class="tag">上游 kikuxdev/X-Comment-Bot-Blocker · 免费开源</span>
+      </footer>
+
+    </div>
+  </div>
+  <script>
+    (function () {
+      var fit = function () {
+        var s = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
+        document.getElementById('stage').style.transform = 'scale(' + s + ')';
+      };
+      window.addEventListener('resize', fit);
+      fit();
+    })();
+  </script>
+</body>
+</html>
