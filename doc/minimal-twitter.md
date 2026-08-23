@@ -7,7 +7,7 @@ Minimal Twitter is a userscript that refines and cleans up the Twitter/X interfa
 To use Minimal Twitter, you need to install a userscript manager like [Tampermonkey](https://www.tampermonkey.net/) or [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/). After installing the userscript manager, click [`here`](https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/minimal-twitter.user.js) to install the userscript.
 
 - Works on `x.com` and `twitter.com`
-- Current version: **v1.0.16**
+- Current version: **v1.0.17**
 
 ## Usage
 
@@ -74,6 +74,7 @@ No reordering is applied to enabled buttons — they keep X's native positions. 
 
 ## Changelog
 
+- **v1.0.17** — Hide icon-less left-nav entries (e.g. Articles) automatically; entries regain visibility if X adds an icon.
 - **v1.0.16** — Fix Creator Studio detection (selector chain + aria-label/text fallback); remove custom ordering; default order keeps native positions and moves Profile to the bottom.
 - **v1.0.15** — (superseded) custom nav ordering.
 - **v1.0.14** — Settings panel i18n; configurable floating settings button.

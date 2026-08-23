@@ -3,7 +3,7 @@
 // @namespace    https://github.com/WhyWhatHow/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.0.16
+// @version      1.0.17
 // @description  Refine and clean up the Twitter interface, and customize your experience. A clean and minimal theme for Twitter/X. Userscript adaptation of the Chrome extension from https://github.com/typefully/minimal-twitter (by Typefully), implemented by whywhathow.
 // @author       whywhathow
 // @match        https://twitter.com/*
@@ -1129,8 +1129,9 @@
     changeJobsButton();
     changeCommunitiesButton();
     changeListsButton();
-     pinListsToSidebar();
-     moveProfileLinkToBottom();
+    pinListsToSidebar();
+    moveProfileLinkToBottom();
+    hideIconlessNavEntries();
     changeProfileButton();
     changeGrokButton();
     changeXPremiumButton();
@@ -1332,6 +1333,26 @@
     }
   }
 
+  // 去掉左侧导航中没有图标的条目（如“文章/Articles”）：
+  // 仅处理 nav 直接子级的 <a> 链接，无 svg/img 图标则内联隐藏并打标记；
+  // 若之后 X 为其补上图标，则自动恢复。幂等，SPA 重渲染后由 runDynamicFeatures 重放。
+  function hideIconlessNavEntries() {
+    const nav = document.querySelector(SELECTORS.leftSidebarLinks);
+    if (!nav) return;
+    Array.from(nav.children).forEach(el => {
+      if (el.tagName !== 'A' || el.id === 'mt-sidebar-lists') return;
+      if (el.querySelector('svg, img')) {
+        if (el.dataset.mtIconless === '1') {
+          delete el.dataset.mtIconless;
+          el.style.display = '';
+        }
+        return;
+      }
+      el.dataset.mtIconless = '1';
+      el.style.display = 'none';
+    });
+  }
+
   // 移除了 changeHideViewCounts 的调用，它现在完全由 CSS 控制
   // Grok 路由切换时同步：打标记类 + 双向豁免/恢复冲突布局规则
   function applyGrokScopedLayouts() {
@@ -1354,9 +1375,10 @@
     changeTimelineTabs(settings.removeTimelineTabs, settings.writerMode);
     changeWriterMode(settings.writerMode);
     hideGrokDrawer(settings.hideGrokDrawer);
-     pinListsToSidebar();
-     applyCreatorStudioFallback();
-     moveProfileLinkToBottom();
+    pinListsToSidebar();
+    applyCreatorStudioFallback();
+    moveProfileLinkToBottom();
+    hideIconlessNavEntries();
   }, 80); // 稍微放宽节流时间
 
   function injectMainStyles() {
