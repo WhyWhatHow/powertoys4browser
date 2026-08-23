@@ -64,7 +64,7 @@ raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/minimal-twitter
 
 给 X 做了个"极简模式":
 左侧导航缩成图标,时间线限宽,杂物全关。
-Typefully 插件的油猴翻版,免费开源:
+Typefully 插件的油猴翻版:
 raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/minimal-twitter.user.js
 
 ---
@@ -113,7 +113,7 @@ raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/x-comment-bot-b
 
 做了个 X 评论 bot 屏蔽器,先说局限:相似度匹配≠语义理解,可能误封正常用户。
 所以它内置了防误伤闭环:仅标记试运行 → 确认命中质量再开自动屏蔽;屏蔽记录留痕,误伤一键跳主页解封+加白名单。
-三维匹配 + 模板驱动,免费开源:
+三维匹配 + 模板驱动:
 raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/x-comment-bot-blocker.user.js
 
 ### 文案 C:短平快
@@ -190,7 +190,7 @@ github.com/WhyWhatHow/powertoys4browser
 
 角标:
 
-v1.0.18 · 三语面板 · Grok 安全 · 免费开源
+v1.0.18 · 三语面板 · Grok 安全 
 
 ## 🖼 图 2:X Comment Bot Blocker 主视觉
 
@@ -204,7 +204,7 @@ v1.0.18 · 三语面板 · Grok 安全 · 免费开源
 
 角标:
 
-试运行防误伤 · 屏蔽记录可解封 · 纯本地 · 免费开源
+试运行防误伤 · 屏蔽记录可解封 · 纯本地 
 
 ## 🖼 图 3:组合图(双脚本)
 
