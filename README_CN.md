@@ -18,7 +18,13 @@ PowerToys4Browser 包括以下用户脚本：
 
 ### Minimal Twitter
 
-本脚本是 Typefully 的 [Minimal Twitter Chrome 插件](https://github.com/typefully/minimal-twitter) 的轻量用户脚本翻版：为 Twitter/X 打造的简洁极简主题，内置设置面板——时间线宽度、左侧导航显隐配置（Premium、Creator Studio、Grok 等）、Grok 页面排版修复、多语言设置面板等。默认提供一套开箱即用的配置，无需任何设置。有关更多信息，请参见 [doc/minimal-twitter.md](doc/minimal-twitter.md)。
+本脚本是 Typefully 的 [Minimal Twitter Chrome 插件](https://github.com/typefully/minimal-twitter) 的轻量用户脚本翻版：为 Twitter/X 打造的简洁极简主题，内置设置面板——时间线宽度、左侧导航显隐配置（Premium、Creator Studio、Grok 等）、Grok 页面排版修复、多语言设置面板等。默认提供一套开箱即用的配置，无需任何设置。
+
+使用前 / 使用后：
+
+![before](assets/minial-twitter-before.png) ![after](assets/minial-twitter-after.png)
+
+有关更多信息，请参见 [doc/minimal-twitter.md](doc/minimal-twitter.md)。
 
 ### Twitter Thread Reader:
 

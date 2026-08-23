@@ -22,6 +22,16 @@ To use X Comment Bot Blocker, you need to install a userscript manager like [Tam
 - Works on `x.com` and `twitter.com`
 - Current version: **v0.14.5**
 
+## Demo
+
+Scan the replies, flag suspicious accounts, then block them — watch it in action:
+
+<video controls width="720">
+  <source src="../assets/x-comment-blcoker.mp4" type="video/mp4">
+</video>
+
+[⬇ Download MP4](../assets/x-comment-blcoker.mp4)
+
 ## Usage
 
 After installing, open any X post page:

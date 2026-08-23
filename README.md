@@ -18,7 +18,13 @@ PowerToys4Browser includes the following userscripts:
 A userscript that scans a tweet's reply section for bot/spam accounts (template-like comments, suspicious usernames, comment keywords) and blocks matched accounts automatically. Includes built-in rule templates, whitelist, dry-run mode and a block log with one-click unblock. **Note: heuristic matching may accidentally block normal users (false positives) — review hits in dry-run mode first.** For more information, please refer to [doc/x-comment-bot-blocker.md](doc/x-comment-bot-blocker.md).
 
 ### Minimal Twitter
-A lightweight userscript port (简单翻版) of the [Minimal Twitter Chrome extension](https://github.com/typefully/minimal-twitter) by Typefully: a clean, minimal theme for Twitter/X with a built-in settings panel — timeline width, navigation visibility (Premium, Creator Studio, Grok, etc.), Grok-safe layout fixes, multi-language panel and more. For more information, please refer to [doc/minimal-twitter.md](doc/minimal-twitter.md).
+A lightweight userscript port (简单翻版) of the [Minimal Twitter Chrome extension](https://github.com/typefully/minimal-twitter) by Typefully: a clean, minimal theme for Twitter/X with a built-in settings panel — timeline width, navigation visibility (Premium, Creator Studio, Grok, etc.), Grok-safe layout fixes, multi-language panel and more.
+
+Before / after:
+
+![before](assets/minial-twitter-before.png) ![after](assets/minial-twitter-after.png)
+
+For more information, please refer to [doc/minimal-twitter.md](doc/minimal-twitter.md).
 
 ### Twitter Thread Reader
 A userscript that allows users to read Twitter threads in one single page. For more information, please refer to [doc/twitter-thread-reader.md](doc/twitter-thread-reader.md).

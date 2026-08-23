@@ -11,9 +11,15 @@ To use Minimal Twitter, you need to install a userscript manager like [Tampermon
 - Works on `x.com` and `twitter.com`
 - Current version: **v1.0.20**
 
-## Screenshot
+## Screenshots
 
-Icon-only left navigation with the built-in settings panel open:
+Before / after — the left navigation shrinks to icons, the timeline gets narrower and cleaner:
+
+![Before](../assets/minial-twitter-before.png)
+
+![After](../assets/minial-twitter-after.png)
+
+Settings panel (简体中文 / 繁體中文 / English):
 
 ![Minimal Twitter settings panel](../assets/minial-twitter.png)
 
