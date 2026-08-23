@@ -9,7 +9,7 @@ This script is a lightweight userscript port (简单翻版) of the Minimal Twitt
 To use Minimal Twitter, you need to install a userscript manager like [Tampermonkey](https://www.tampermonkey.net/) or [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/). After installing the userscript manager, click [`here`](https://raw.githubusercontent.com/WhyWhatHow/powertoys4browser/master/js/minimal-twitter.user.js) to install the userscript.
 
 - Works on `x.com` and `twitter.com`
-- Current version: **v1.0.20**
+- Current version: **v1.0.21**
 
 ## Screenshots
 
@@ -88,6 +88,7 @@ No reordering is applied to enabled buttons — they keep X's native positions. 
 
 ## Changelog
 
+- **v1.0.21** — Fix scrollbar appearing at the bottom of the left nav on `/messages`: stop injecting the Lists item and stop moving Profile there (nav stays native on the compact DM layout), and hide the nav scrollbar on that page.
 - **v1.0.20** — Declare `@license MIT` in script metadata (required by GreasyFork).
 - **v1.0.19** — Localized metadata: `@name:zh` / `@description:zh` for Chinese users (GreasyFork display).
 - **v1.0.18** — Fix left-nav layout breaking after clicking the Messages/chat button: DM-page sidebar styles now apply on SPA navigation (history `pushState`/`replaceState` hook), and fixed-position nav styles are no longer re-added on `/messages` where they conflict with the flex layout.

@@ -4,7 +4,7 @@
 // @namespace    https://github.com/WhyWhatHow/
 // @homepage     https://github.com/WhyWhatHow/powertoys4browser
 // @supportURL   https://github.com/WhyWhatHow/powertoys4browser/issues
-// @version      1.0.20
+// @version      1.0.21
 // @description  Refine and clean up the Twitter interface, and customize your experience. A clean and minimal theme for Twitter/X. Userscript adaptation of the Chrome extension from https://github.com/typefully/minimal-twitter (by Typefully), implemented by whywhathow.
 // @description:zh  为 X/Twitter 打造极简主题:图标化左侧导航（悬停显示标签）、时间线限宽、Premium/Grok/Creator Studio 等导航项逐项显隐、Grok 页面零干扰、内置中/英/繁三语设置面板、自定义 CSS 注入。Typefully 同名 Chrome 插件的轻量油猴翻版，MIT 开源免费。
 // @author       whywhathow
@@ -949,6 +949,14 @@
         ${SELECTORS.mainWrapper} {
           align-items: flex-start;
         }
+        /* 私信页 nav 紧凑布局下隐藏原生滚动条, 避免排版瑕疵 */
+        ${SELECTORS.leftSidebarLinks} {
+          scrollbar-width: none;
+          overflow-y: hidden;
+        }
+        ${SELECTORS.leftSidebarLinks}::-webkit-scrollbar {
+          display: none;
+        }
       `);
     } else {
       removeStyles('customDMsAndSearchStyle');
@@ -1267,6 +1275,12 @@
   function pinListsToSidebar() {
     const nav = document.querySelector(SELECTORS.leftSidebarLinks);
     if (!nav) return;
+    // 私信页 X 会把左侧导航压缩成紧凑布局：注入额外项会挤爆 nav 容器
+    // 出现滚动条（Lists 仍可从 More 菜单访问），故私信页不注入并移除已注入项
+    if (window.location.pathname.startsWith('/messages')) {
+      document.getElementById('mt-sidebar-lists')?.remove();
+      return;
+    }
     // 关闭时立即移除已固定的 Lists 项（不能只靠 CSS 隐藏，ID 优先级会覆盖隐藏规则）
     if (settings.listsButton !== 'on') {
       document.getElementById('mt-sidebar-lists')?.remove();
@@ -1322,6 +1336,8 @@
   function moveProfileLinkToBottom() {
     const nav = document.querySelector(SELECTORS.leftSidebarLinks);
     if (!nav) return;
+    // 私信页保持 X 原生顺序，不做移动（避免紧凑布局下内容超高出现滚动条）
+    if (window.location.pathname.startsWith('/messages')) return;
     const profile = nav.querySelector('[data-testid="AppTabBar_Profile_Link"]');
     if (!profile || profile.parentElement !== nav) return;
     const switcher = document.querySelector(SELECTORS.accountSwitcherButton);
